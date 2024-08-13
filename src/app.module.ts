@@ -1,23 +1,25 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
-import { ProductsModule } from './products/products.module';
-import { CategoriesModule } from './categories/categories.module';
-import { CartsModule } from './carts/carts.module';
-import { OrdersModule } from './orders/orders.module';
-import { UsersController } from './users/users.controller';
-import { OrdersController } from './orders/orders.controller';
-import { CategoriesController } from './categories/categories.controller';
-import { CartsController } from './carts/carts.controller';
-import { UsersService } from './users/users.service';
+import { UsersModule } from './modules/users/users.module';
+import { ProductsModule } from './modules/products/products.module';
+import { CategoriesModule } from './modules/categories/categories.module';
+import { CartsModule } from './modules/carts/carts.module';
+import { OrdersModule } from './modules/orders/orders.module';
+import { UsersController } from './modules/users/users.controller';
+import { OrdersController } from './modules/orders/orders.controller';
+import { CategoriesController } from './modules/categories/categories.controller';
+import { CartsController } from './modules/carts/carts.controller';
+import { AuthService } from './modules/auth/auth.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'DB.sqlite',
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'usuario',
+      password: 'senha',
+      database: 'banco',
       entities: ['./**/*.entity.js'],
       synchronize: true,
     }),
@@ -28,12 +30,11 @@ import { UsersService } from './users/users.service';
     CartsModule,
   ],
   controllers: [
-    AppController,
     OrdersController,
     UsersController,
     CategoriesController,
     CartsController,
   ],
-  providers: [AppService],
+  providers: [AuthService],
 })
 export class AppModule {}

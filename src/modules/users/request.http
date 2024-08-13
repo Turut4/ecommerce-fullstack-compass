@@ -1,0 +1,36 @@
+###Create new user
+POST  http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "username": "carlos",
+  "email":"carlos@gmail.com",
+  "password": "test1234",
+  "role": "admin"
+}
+
+###login User
+POST  http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email":"anderson@gmail.com",
+  "password": "test1234",
+  "role": "admin"
+}
+
+### sign out
+GET http://localhost:3000/auth/signout
+
+###get current signin user
+GET http://localhost:3000/auth/whoiam
+
+### Find all Users
+GET http://localhost:3000/auth
+
+
+### Find user by id
+GET http://localhost:3000/auth/5357abdf-11a1-4a45-8c98-53baa3a22c7c
+
+###Delete user
+DELETE http://localhost:3000/auth/5357abdf-11a1-4a45-8c98-53baa3a22c7c
