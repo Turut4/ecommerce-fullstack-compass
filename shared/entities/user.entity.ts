@@ -1,17 +1,17 @@
 import {
   Entity,
-  PrimaryColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-
 import { Cart } from './cart.entity';
+import { Order } from './order.entity';
 
 @Entity('users')
 export class User {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
@@ -31,4 +31,7 @@ export class User {
 
   @OneToMany(() => Cart, (carts) => carts.user)
   carts: Cart[];
+
+  @OneToMany(() => Order, (orders) => orders.user)
+  orders: Order[];
 }

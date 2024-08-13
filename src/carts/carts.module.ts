@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CartsService } from './carts.service';
 import { CartsController } from './carts.controller';
-import { Cart } from 'src/entities/cart.entity';
+import { Cart } from 'shared/entities/cart.entity';
 
 @Module({
   imports: [Cart],
