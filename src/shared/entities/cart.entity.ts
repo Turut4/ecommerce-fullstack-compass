@@ -5,21 +5,21 @@ import {
   ManyToMany,
   ManyToOne,
   OneToOne,
-  OneToMany,
-  Unique,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Product } from './product.entity';
+import { Order } from './order.entity';
 
 @Entity('carts')
 export class Cart {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @ManyToOne(() => User, (user) => user.carts)
+  @OneToOne(() => User, (user) => user.cart)
   user: User;
 
-  @ManyToOne(() => Product, (product) => product.carts)
+  @ManyToMany(() => Product, (product) => product.carts)
   products: Product[];
 }

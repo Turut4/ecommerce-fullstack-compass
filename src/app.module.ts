@@ -11,6 +11,8 @@ import { CategoriesController } from './modules/categories/categories.controller
 import { CartsController } from './modules/carts/carts.controller';
 import { AuthService } from './modules/users/auth/auth.service';
 import { PasswordService } from './modules/users/auth/password/password.service';
+import { SkuService } from './modules/products/sku/sku.service';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -35,6 +37,6 @@ import { PasswordService } from './modules/users/auth/password/password.service'
     CategoriesController,
     CartsController,
   ],
-  providers: [AuthService, PasswordService],
+  providers: [AuthService, PasswordService, SkuService],
 })
 export class AppModule {}

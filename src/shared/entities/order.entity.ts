@@ -1,21 +1,22 @@
 import {
   Entity,
-  PrimaryColumn,
-  Column,
   OneToMany,
-  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Column,
 } from 'typeorm';
 import { Product } from './product.entity';
 import { User } from './user.entity';
 
 @Entity('orders')
 export class Order {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @OneToMany(() => Product, (products) => products.order)
+  @Column()
+  totalPrice: number;
+
+  @OneToMany(() => Product, (product) => product.orders)
   products: Product[];
 
   @ManyToOne(() => User, (user) => user.orders)

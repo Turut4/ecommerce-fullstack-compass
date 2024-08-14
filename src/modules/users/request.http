@@ -39,5 +39,6 @@ PATCH http://localhost:3000/auth/d7eff0d2-c397-4b8d-a3b4-5d4d40b525fc
 Content-Type: application/json
 
 {
-  "email":"prietro@gmail.com"
+  "email":"prietro@gmil.com",
+  "confirmPassword": "asdfasd"
 }

@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   PrimaryGeneratedColumn,
+  OneToOne,
 } from 'typeorm';
 import { Cart } from './cart.entity';
 import { Order } from './order.entity';
@@ -14,13 +15,13 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({unique: true})
   email: string;
 
   @Column()
   password: string;
 
-  @Column()
+  @Column({unique: true})
   username: string;
 
   @CreateDateColumn()
@@ -29,8 +30,8 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => Cart, (carts) => carts.user)
-  carts: Cart[];
+  @OneToOne(() => Cart, (carts) => carts.user)
+  cart: Cart;
 
   @OneToMany(() => Order, (orders) => orders.user)
   orders: Order[];

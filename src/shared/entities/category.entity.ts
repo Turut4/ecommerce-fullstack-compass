@@ -3,12 +3,12 @@ import { Product } from './product.entity';
 
 @Entity('categories')
 export class Category {
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   id: number;
 
   @Column()
   name: string;
 
-  @OneToMany(() => Product, (products) => products.category)
+  @OneToMany(() => Product, (product) => product.category)
   products: Product[];
 }

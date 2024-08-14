@@ -1,0 +1,32 @@
+###Create project
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+  "name": "aaaaa ",
+  "description": "good desk for your bedroom",
+  "price": 500000,
+  "image": "grinder.png",
+  "percentageDiscount": 1,
+  "color": "green",
+  "size": "M",
+  "stock": 10
+
+}
+
+###Find all products || product by name
+GET http://localhost:3000/products?grinder
+
+### Find product by id
+GET http://localhost:3000/products/986db272-8445-4ab9-b9a6-011c92374dca
+
+###Update user
+PATCH http://localhost:3000/products/986db272-8445-4ab9-b9a6-011c92374dca
+Content-Type: application/json
+
+{
+  "name":"levioso"
+}
+
+###Delete Product
+DELETE http://localhost:3000/products/986db272-8445-4ab9-b9a6-011c92374dca

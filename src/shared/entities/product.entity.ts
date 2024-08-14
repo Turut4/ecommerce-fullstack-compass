@@ -1,11 +1,10 @@
 import {
   Entity,
-  PrimaryColumn,
-  Column,
-  OneToMany,
-  OneToOne,
-  ManyToOne,
   PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  ManyToOne,
+  JoinTable,
 } from 'typeorm';
 import { Cart } from './cart.entity';
 import { Category } from './category.entity';
@@ -22,20 +21,30 @@ export class Product {
   @Column()
   price: number;
 
-  @Column()
+  @Column({ default: 0 })
   percentageDiscount: number;
+
+  @Column({ default: 0 })
+  stock: number;
 
   @Column()
   description: string;
 
   @Column()
+  color: string;
+
+  @Column()
+  size: string;
+
+  @Column()
   image: string;
 
-  @OneToMany(() => Cart, (cart) => cart.products)
-  carts: Cart[];
-
   @ManyToOne(() => Order, (order) => order.products)
-  order: Order[];
+  orders: Order[];
+
+  @ManyToMany(() => Cart, (cart) => cart.products)
+  @JoinTable()
+  carts: Cart[];
 
   @ManyToOne(() => Category, (category) => category.products)
   category: Category;

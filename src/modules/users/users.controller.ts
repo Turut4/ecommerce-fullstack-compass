@@ -11,14 +11,14 @@ import {
   Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from '../../shared/dtos/users/create-user.dto';
-import { UserDto } from 'src/shared/dtos/users/user.dto';
+import { CreateUserDto } from '../../shared/dtos/user/create-user.dto';
+import { UserDto } from 'src/shared/dtos/user/user.dto';
 import { Serialize } from 'src/modules/interceptors/serialize.interceptor';
 import { AuthService } from './auth/auth.service';
 import { User } from 'src/shared/entities/user.entity';
-import { LoginUserDto } from 'src/shared/dtos/users/login-user.dto';
+import { LoginUserDto } from 'src/shared/dtos/user/login-user.dto';
 import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
-import { UpdateUserDto } from 'src/shared/dtos/users/update-user.dto';
+import { UpdateUserDto } from 'src/shared/dtos/user/update-user.dto';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -50,7 +50,7 @@ export class UsersController {
   }
 
   @Get('/signout')
-  async signout(@Session() session: any): Promise<void> {
+  signout(@Session() session: any): void {
     session.userId = null;
   }
 
