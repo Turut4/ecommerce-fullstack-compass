@@ -3,8 +3,8 @@ POST  http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-  "username": "carlos",
-  "email":"carlos@gmail.com",
+  "username": "pedro",
+  "email":"pedro@gmail.com",
   "password": "test1234",
   "role": "admin"
 }
@@ -14,9 +14,8 @@ POST  http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-  "email":"anderson@gmail.com",
-  "password": "test1234",
-  "role": "admin"
+  "email":"pedro@gmail.com",
+  "password": "test1234"
 }
 
 ### sign out
@@ -34,3 +33,11 @@ GET http://localhost:3000/auth/5357abdf-11a1-4a45-8c98-53baa3a22c7c
 
 ###Delete user
 DELETE http://localhost:3000/auth/5357abdf-11a1-4a45-8c98-53baa3a22c7c
+
+### update users info
+PATCH http://localhost:3000/auth/d7eff0d2-c397-4b8d-a3b4-5d4d40b525fc
+Content-Type: application/json
+
+{
+  "email":"prietro@gmail.com"
+}

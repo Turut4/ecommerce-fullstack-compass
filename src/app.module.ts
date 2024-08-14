@@ -9,8 +9,8 @@ import { UsersController } from './modules/users/users.controller';
 import { OrdersController } from './modules/orders/orders.controller';
 import { CategoriesController } from './modules/categories/categories.controller';
 import { CartsController } from './modules/carts/carts.controller';
-import { AuthService } from './modules/auth/auth.service';
-
+import { AuthService } from './modules/users/auth/auth.service';
+import { PasswordService } from './modules/users/auth/password/password.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -35,6 +35,6 @@ import { AuthService } from './modules/auth/auth.service';
     CategoriesController,
     CartsController,
   ],
-  providers: [AuthService],
+  providers: [AuthService, PasswordService],
 })
 export class AppModule {}

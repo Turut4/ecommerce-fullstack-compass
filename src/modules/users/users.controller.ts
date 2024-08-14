@@ -4,7 +4,6 @@ import {
   Post,
   Get,
   Query,
-  NotFoundException,
   Param,
   Delete,
   Session,
@@ -15,7 +14,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from '../../shared/dtos/users/create-user.dto';
 import { UserDto } from 'src/shared/dtos/users/user.dto';
 import { Serialize } from 'src/modules/interceptors/serialize.interceptor';
-import { AuthService } from 'src/modules/auth/auth.service';
+import { AuthService } from './auth/auth.service';
 import { User } from 'src/shared/entities/user.entity';
 import { LoginUserDto } from 'src/shared/dtos/users/login-user.dto';
 import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
@@ -41,10 +40,12 @@ export class UsersController {
   }
 
   @Post('/signin')
-  async signin(@Body() body: LoginUserDto, @Session() session: any) {
+  async signin(
+    @Body() body: LoginUserDto,
+    @Session() session: any,
+  ): Promise<User> {
     const user = await this.authService.signin(body.email, body.password);
     session.userId = user.id;
-    console.log(session);
     return user;
   }
 
@@ -54,29 +55,32 @@ export class UsersController {
   }
 
   @Get('/whoiam')
-  async whoAmI(@CurrentUser() user: User) {
+  async whoAmI(@CurrentUser() user: User): Promise<User> {
     return user;
   }
 
   @Patch('/:id')
-  async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+  async updateUser(
+    @Param('id') id: string,
+    @Body() body: UpdateUserDto,
+  ): Promise<User> {
     return this.usersService.update(id, body);
   }
 
   @Get()
-  async findAllUsers(@Query('email') email: string) {
+  async findAllUsers(@Query('email') email: string): Promise<User[]> {
     return this.usersService.find(email);
   }
 
   @Get('/:id')
-  async findUser(@Param('id') id: string) {
+  async findUser(@Param('id') id: string): Promise<User> {
     const user = await this.usersService.findOne(id);
 
     return user;
   }
 
   @Delete('/:id')
-  async deleteUser(@Param('id') id: string) {
+  async deleteUser(@Param('id') id: string): Promise<User> {
     return this.usersService.remove(id);
   }
 }
