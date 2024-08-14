@@ -9,15 +9,20 @@ const scrypt = promisify(_scrypt);
 export class AuthService {
   constructor(private readonly userService: UsersService) {}
 
-  async signup(email: string, password: string, username: string) {
-    const users = await this.userService.find(email);
-    if (users.length) throw new BadRequestException('Email already in use');
+  async hashPassword(password: string) {
     const salt = randomBytes(8).toString('hex');
     const hash = (await scrypt(password, salt, 32)) as Buffer;
 
     const result = salt + '.' + hash.toString('hex');
+    return result;
+  }
 
-    const user = this.userService.create(email, result, username);
+  async signup(email: string, password: string, username: string) {
+    const users = await this.userService.find(email);
+    const hashedPassword = await this.hashPassword(password);
+    if (users.length) throw new BadRequestException('Email already in use');
+
+    const user = this.userService.create(email, hashedPassword, username);
 
     return user;
   }

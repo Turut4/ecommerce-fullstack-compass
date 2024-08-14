@@ -5,6 +5,7 @@ import {
   OneToMany,
   OneToOne,
   ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Cart } from './cart.entity';
 import { Category } from './category.entity';
@@ -12,8 +13,8 @@ import { Order } from './order.entity';
 
 @Entity('products')
 export class Product {
-  @PrimaryColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;
@@ -22,7 +23,7 @@ export class Product {
   price: number;
 
   @Column()
-  percentage_discount: number;
+  percentageDiscount: number;
 
   @Column()
   description: string;
