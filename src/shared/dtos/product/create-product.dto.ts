@@ -6,7 +6,10 @@ import {
   Min,
   Max,
   MinLength,
+  IsEmpty,
 } from 'class-validator';
+
+import { Size } from './../../entities/product.entity';
 
 export class CreateProductDto {
   @IsNumber()
@@ -29,7 +32,7 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
-  size: string;
+  size: Size;
 
   @IsNotEmpty()
   @IsNumber()

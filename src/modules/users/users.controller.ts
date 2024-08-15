@@ -9,16 +9,18 @@ import {
   Session,
   Patch,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from '../../shared/dtos/user/create-user.dto';
 import { UserDto } from 'src/shared/dtos/user/user.dto';
-import { Serialize } from 'src/modules/interceptors/serialize.interceptor';
+import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { AuthService } from './auth/auth.service';
 import { User } from 'src/shared/entities/user.entity';
 import { LoginUserDto } from 'src/shared/dtos/user/login-user.dto';
 import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { UpdateUserDto } from 'src/shared/dtos/user/update-user.dto';
+import { AuthGuard } from 'src/shared/guards/auth.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -55,16 +57,22 @@ export class UsersController {
   }
 
   @Get('/whoiam')
+  @UseGuards(AuthGuard)
   async whoAmI(@CurrentUser() user: User): Promise<User> {
     return user;
   }
 
-  @Patch('/:id')
+  @Patch('update/:id')
   async updateUser(
     @Param('id') id: string,
     @Body() body: UpdateUserDto,
   ): Promise<User> {
     return this.usersService.update(id, body);
+  }
+
+  @Patch('/updateMe')
+  async updateMe(@Body() body: UpdateUserDto, @CurrentUser() user: User) {
+    return this.usersService.update(user.id, body);
   }
 
   @Get()

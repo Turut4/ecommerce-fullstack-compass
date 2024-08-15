@@ -1,12 +1,9 @@
 import {
   Entity,
-  PrimaryColumn,
-  Column,
   ManyToMany,
-  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
-  OneToMany,
+  JoinTable,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Product } from './product.entity';
@@ -18,8 +15,12 @@ export class Cart {
   id: number;
 
   @OneToOne(() => User, (user) => user.cart)
+  @JoinTable()
   user: User;
 
+  @OneToOne(() => Order, (order) => order.cart)
+  order: Order;
+  
   @ManyToMany(() => Product, (product) => product.carts)
   products: Product[];
 }

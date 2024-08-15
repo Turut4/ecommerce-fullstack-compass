@@ -11,6 +11,7 @@ import {
 import { CreateProductDto } from 'src/shared/dtos/product/create-product.dto';
 import { ProductsService } from './products.service';
 import { UpdateProductDto } from 'src/shared/dtos/product/update-product.dto';
+import { UpdateStockDto } from 'src/shared/dtos/product/update-stock.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -26,18 +27,23 @@ export class ProductsController {
     return this.productsService.find(name);
   }
 
-  @Get('/:id')
-  findProduct(@Param('id') id: string) {
-    return this.productsService.findOne(id);
+  @Get('/:sku')
+  findProduct(@Param('sku') sku: string) {
+    return this.productsService.findOne(sku);
   }
 
-  @Patch('/:id')
-  updateProduct(@Param('id') id: string, @Body() body: UpdateProductDto) {
-    return this.productsService.update(id, body);
+  @Patch('/:sku')
+  updateProduct(@Param('sku') sku: string, @Body() body: UpdateProductDto) {
+    return this.productsService.update(sku, body);
   }
 
-  @Delete('/:id')
-  deleteProduct(@Param('id') id: string) {
-    return this.productsService.delete(id);
+  @Patch(':sku')
+  updateProductStock(@Param('sku') sku: string, @Body() body: UpdateStockDto) {
+    return this.productsService.updateStock(sku, body);
+  }
+
+  @Delete('/:sku')
+  deleteProduct(@Param('sku') sku: string) {
+    return this.productsService.delete(sku);
   }
 }

@@ -12,6 +12,7 @@ import { CartsController } from './modules/carts/carts.controller';
 import { AuthService } from './modules/users/auth/auth.service';
 import { PasswordService } from './modules/users/auth/password/password.service';
 import { SkuService } from './modules/products/sku/sku.service';
+import { CategoriesService } from './modules/categories/categories.service';
 
 @Module({
   imports: [
@@ -37,6 +38,6 @@ import { SkuService } from './modules/products/sku/sku.service';
     CategoriesController,
     CartsController,
   ],
-  providers: [AuthService, PasswordService, SkuService],
+  providers: [AuthService],
 })
 export class AppModule {}

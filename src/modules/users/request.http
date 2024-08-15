@@ -35,10 +35,19 @@ GET http://localhost:3000/auth/5357abdf-11a1-4a45-8c98-53baa3a22c7c
 DELETE http://localhost:3000/auth/5357abdf-11a1-4a45-8c98-53baa3a22c7c
 
 ### update users info
-PATCH http://localhost:3000/auth/d7eff0d2-c397-4b8d-a3b4-5d4d40b525fc
+PATCH http://localhost:3000/auth/update/d7eff0d2-c397-4b8d-a3b4-5d4d40b525fc
 Content-Type: application/json
 
 {
   "email":"prietro@gmil.com",
-  "confirmPassword": "asdfasd"
+  "confirmPassword": "test1234"
+}
+
+### update me
+PATCH http://localhost:3000/auth/updateMe
+Content-Type: application/json
+
+{
+  "email":"me@gmil.com",
+  "confirmPassword": "test1234"
 }

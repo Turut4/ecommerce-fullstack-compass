@@ -5,15 +5,22 @@ import {
   ManyToMany,
   ManyToOne,
   JoinTable,
+  PrimaryColumn,
 } from 'typeorm';
 import { Cart } from './cart.entity';
 import { Category } from './category.entity';
 import { Order } from './order.entity';
 
+export enum Size {
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  LARGE = 'large',
+}
+
 @Entity('products')
 export class Product {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn()
+  sku: string;
 
   @Column()
   name: string;
@@ -33,14 +40,11 @@ export class Product {
   @Column()
   color: string;
 
-  @Column()
-  size: string;
+  @Column({ default: 'medium', type: 'enum', enum: Size })
+  size: Size;
 
   @Column()
   image: string;
-
-  @ManyToOne(() => Order, (order) => order.products)
-  orders: Order[];
 
   @ManyToMany(() => Cart, (cart) => cart.products)
   @JoinTable()

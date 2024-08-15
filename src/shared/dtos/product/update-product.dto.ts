@@ -6,6 +6,7 @@ import {
   Max,
   MinLength,
 } from 'class-validator';
+import { Size } from 'src/shared/entities/product.entity';
 
 export class UpdateProductDto {
   @IsOptional()
@@ -26,9 +27,13 @@ export class UpdateProductDto {
   @IsOptional()
   color?: string;
 
+  @IsNumber()
+  @IsOptional()
+  stock: number;
+
   @IsString()
   @IsOptional()
-  size: string;
+  size: Size;
 
   @IsOptional()
   @IsNumber()
