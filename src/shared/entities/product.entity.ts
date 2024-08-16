@@ -6,6 +6,7 @@ import {
   ManyToOne,
   JoinTable,
   PrimaryColumn,
+  OneToMany,
 } from 'typeorm';
 import { Cart } from './cart.entity';
 import { Category } from './category.entity';
@@ -50,6 +51,6 @@ export class Product {
   @JoinTable()
   carts: Cart[];
 
-  @ManyToOne(() => Category, (category) => category.products)
+  @OneToMany(() => Category, (category) => category.products)
   category: Category;
 }

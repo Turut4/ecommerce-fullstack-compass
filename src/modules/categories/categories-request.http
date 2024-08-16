@@ -1,0 +1,18 @@
+###create category
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "name": "cama",
+  "productsId": ["MORE03YE"]
+
+}
+
+###get all categories
+GET http://localhost:3000/categories/
+
+###get a category
+GET http://localhost:3000/categories/7301afc5-458c-4014-85c0-e3701d384fe7
+
+###delete categoria
+DELETE http://localhost:3000/categories/ec56e08c-8cfc-48e2-9716-132c7a57f998

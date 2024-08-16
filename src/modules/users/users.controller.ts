@@ -22,7 +22,7 @@ import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { UpdateUserDto } from 'src/shared/dtos/user/update-user.dto';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 
-@Controller('auth')
+@Controller('users')
 @Serialize(UserDto)
 export class UsersController {
   constructor(
@@ -30,7 +30,7 @@ export class UsersController {
     private readonly authService: AuthService,
   ) {}
 
-  @Post('/signup')
+  @Post('auth/signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signup(
       body.email,
@@ -41,7 +41,7 @@ export class UsersController {
     return user;
   }
 
-  @Post('/signin')
+  @Post('auth/signin')
   async signin(
     @Body() body: LoginUserDto,
     @Session() session: any,
@@ -51,12 +51,12 @@ export class UsersController {
     return user;
   }
 
-  @Get('/signout')
+  @Get('auth/signout')
   signout(@Session() session: any): void {
     session.userId = null;
   }
 
-  @Get('/whoiam')
+  @Get('auth/whoiam')
   @UseGuards(AuthGuard)
   async whoAmI(@CurrentUser() user: User): Promise<User> {
     return user;
@@ -76,8 +76,8 @@ export class UsersController {
   }
 
   @Get()
-  async findAllUsers(@Query('email') email: string): Promise<User[]> {
-    return this.usersService.find(email);
+  async findUsers(@Query('email') email: string): Promise<User[]> {
+    return this.usersService.find(email)
   }
 
   @Get('/:id')
@@ -90,5 +90,10 @@ export class UsersController {
   @Delete('/:id')
   async deleteUser(@Param('id') id: string): Promise<User> {
     return this.usersService.remove(id);
+  }
+
+  @Post('seed/:count')
+  async seedUsers(@Param('count') count: string): Promise<User[]> {
+    return this.usersService.createRandomUsers(parseInt(count));
   }
 }

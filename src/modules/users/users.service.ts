@@ -9,6 +9,8 @@ import { Repository } from 'typeorm';
 import { UpdateUserDto } from 'src/shared/dtos/user/update-user.dto';
 import { PasswordService } from './auth/password/password.service';
 
+const { faker } = require('@faker-js/faker');
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -27,7 +29,7 @@ export class UsersService {
   }
 
   async find(email: string): Promise<User[]> {
-    return this.repo.find({ where: { email } });
+    return this.repo.findBy({ email });
   }
 
   async findOne(id: string) {
@@ -63,5 +65,19 @@ export class UsersService {
     const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not found');
     return this.repo.remove(user);
+  }
+
+  async createRandomUsers(count: number): Promise<User[]> {
+    function createRandomUser(): User {
+      return {
+        id: faker.string.uuid(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        username: faker.internet.userName(),
+      } as User;
+    }
+
+    const users: User[] = Array.from({ length: count }, createRandomUser);
+    return await this.repo.save(users);
   }
 }

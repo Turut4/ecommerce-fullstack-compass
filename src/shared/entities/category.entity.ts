@@ -1,14 +1,22 @@
-import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Product } from './product.entity';
 
 @Entity('categories')
 export class Category {
-  @PrimaryColumn('uuid')
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;
 
-  @OneToMany(() => Product, (product) => product.category)
+  @ManyToOne(() => Product, (product) => product.category)
   products: Product[];
 }

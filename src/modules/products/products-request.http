@@ -3,18 +3,18 @@ POST http://localhost:3000/products
 Content-Type: application/json
 
 {
-  "name": "montreal",
+  "name": "matreal",
   "price": 500000,
   "percentageDiscount": 1,
   "stock": 2,
   "description": "good desk for your bedroom",
   "color": "yellow",
-  "size": "small",
+  "size": "large",
   "image": "grinder.png"
 }
 
 ###Find all products || product by name
-GET http://localhost:3000/products?grinder
+GET http://localhost:3000/products?name=p
 
 ### Find product by id
 GET http://localhost:3000/products/MON01GR
@@ -29,3 +29,7 @@ Content-Type: application/json
 
 ###Delete Product
 DELETE http://localhost:3000/products/986db272-8445-4ab9-b9a6-011c92374dca
+
+
+###gen products
+GET http://localhost:3000/products/seed/10

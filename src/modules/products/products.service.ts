@@ -11,6 +11,8 @@ import { Repository } from 'typeorm';
 import { SkuService } from './sku/sku.service';
 import { UpdateStockDto } from 'src/shared/dtos/product/update-stock.dto';
 
+const { faker } = require('@faker-js/faker');
+
 @Injectable()
 export class ProductsService {
   constructor(
@@ -20,8 +22,8 @@ export class ProductsService {
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const sku = this.skuService.generateSku(createProductDto);
-
     const existingProduct = await this.repo.findOne({ where: { sku } });
+
     if (existingProduct) {
       throw new BadRequestException('This product already exists...');
     }
@@ -31,8 +33,15 @@ export class ProductsService {
     return await this.repo.save(product);
   }
 
-  async find(name: string): Promise<Product[]> {
-    return await this.repo.find({ where: { name } });
+  async find(): Promise<Product[]> {
+    return await this.repo.find();
+  }
+
+  async findByName(name: string): Promise<Product[]> {
+    return await this.repo
+      .createQueryBuilder()
+      .where('name LIKE :name', { name: `%${name}%` })
+      .getMany();
   }
 
   async findOne(sku: string): Promise<Product> {
@@ -49,6 +58,7 @@ export class ProductsService {
     const product = await this.findOne(sku);
 
     Object.assign(product, updateProductDto);
+    product.sku = this.skuService.generateSku(product);
 
     return await this.repo.save(product);
   }
@@ -67,8 +77,33 @@ export class ProductsService {
 
   async delete(sku: string) {
     const product = await this.findOne(sku);
-    console.log(product);
     if (!product) throw new NotFoundException('product not found');
+
     return this.repo.remove(product);
+  }
+
+  generateProduct() {
+    const product = {
+      name: faker.commerce.productName(),
+      description: faker.commerce.productDescription(),
+      price: parseFloat(faker.commerce.price()),
+      color: faker.color.rgb(),
+      stock: faker.number.int({ min: 0, max: 100 }),
+      image: faker.image.url(),
+      size: faker.helpers.arrayElement(['small', 'medium', 'large']),
+      percentageDiscount: faker.number.int({ min: 0, max: 40 }),
+    } as Product;
+
+    product.sku = this.skuService.generateSku(product);
+
+    return product;
+  }
+
+  async generateRandomProducts(count: number) {
+    const products = Array.from({ length: count }, () =>
+      this.generateProduct(),
+    );
+
+    return await this.repo.save(products);
   }
 }

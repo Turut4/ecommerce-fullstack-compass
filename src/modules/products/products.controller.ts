@@ -23,12 +23,17 @@ export class ProductsController {
   }
 
   @Get()
-  findAllProducts(@Query('name') name: string) {
-    return this.productsService.find(name);
+  findAllProducts() {
+    return this.productsService.find();
+  }
+
+  @Get()
+  findProductsByName(@Query('name') name: string) {
+    return this.productsService.findByName(name);
   }
 
   @Get('/:sku')
-  findProduct(@Param('sku') sku: string) {
+  findOne(@Param('sku') sku: string) {
     return this.productsService.findOne(sku);
   }
 
@@ -45,5 +50,10 @@ export class ProductsController {
   @Delete('/:sku')
   deleteProduct(@Param('sku') sku: string) {
     return this.productsService.delete(sku);
+  }
+
+  @Get('/seed/:count')
+  generateRandomProducts(@Param('count') count: string) {
+    return this.productsService.generateRandomProducts(parseInt(count));
   }
 }
