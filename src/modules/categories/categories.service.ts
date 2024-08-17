@@ -1,16 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCategoryDto } from 'src/shared/dtos/category/create-category.dto';
 import { Category } from 'src/shared/entities/category.entity';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../products/products.service';
+import { count } from 'console';
+
+const { faker } = require('@faker-js/faker');
 
 @Injectable()
 export class CategoriesService {
   constructor(
     @InjectRepository(Category)
-    private readonly repo: Repository<Category>,
-    private readonly productsService: ProductsService,
+    private repo: Repository<Category>,
+    @Inject(forwardRef(() => ProductsService))
+    private productsService: ProductsService,
   ) {}
 
   async resolveProducts(productsId: string[]) {
@@ -38,9 +47,9 @@ export class CategoriesService {
   async findOne(id: string) {
     const category = await this.repo.findOne({
       where: { id },
+      relations: ['products'],
     });
-    if (!category) throw new Error('Category not found');
-    console.log(category.products);
+    if (!category) throw new BadRequestException('Category not found');
 
     return category;
   }
@@ -55,8 +64,26 @@ export class CategoriesService {
 
   async remove(id: string) {
     const category = await this.findOne(id);
-    if (!category) throw new Error('Category not found');
 
     return this.repo.remove(category);
+  }
+
+  async getRandomCategory() {
+    const categories = await this.findAll();
+    return categories[Math.floor(Math.random() * categories.length)];
+  }
+
+  genreteRandomCategory() {
+    const category = {
+      name: faker.commerce.department(),
+    } as Category;
+    return category;
+  }
+
+  async genrateRandomCategories(amount: number) {
+    const categories = await Promise.all(
+      Array.from({ length: amount }, this.genreteRandomCategory),
+    );
+    return await this.repo.save(categories);
   }
 }

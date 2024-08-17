@@ -1,5 +1,7 @@
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -7,9 +9,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateProductDto } from 'src/shared/dtos/product/create-product.dto';
 import { UpdateProductDto } from 'src/shared/dtos/product/update-product.dto';
 import { Product } from 'src/shared/entities/product.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { SkuService } from './sku/sku.service';
 import { UpdateStockDto } from 'src/shared/dtos/product/update-stock.dto';
+import { CategoriesService } from '../categories/categories.service';
 
 const { faker } = require('@faker-js/faker');
 
@@ -18,17 +21,25 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product) private readonly repo: Repository<Product>,
     private readonly skuService: SkuService,
+    @Inject(forwardRef(() => CategoriesService))
+    private readonly categoriesService: CategoriesService,
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const sku = this.skuService.generateSku(createProductDto);
-    const existingProduct = await this.repo.findOne({ where: { sku } });
+    const product = this.repo.create(createProductDto);
+    product.sku = this.skuService.generateSku(product);
 
-    if (existingProduct) {
+    const productExists = await this.repo.findOne({
+      where: { sku: product.sku },
+    });
+
+    if (productExists) {
       throw new BadRequestException('This product already exists...');
     }
 
-    const product = this.repo.create({ ...createProductDto, sku });
+    product.category = await this.categoriesService.findOne(
+      createProductDto.categoryId,
+    );
 
     return await this.repo.save(product);
   }
@@ -82,7 +93,8 @@ export class ProductsService {
     return this.repo.remove(product);
   }
 
-  generateProduct() {
+  async generateProduct() {
+    const category = await this.categoriesService.getRandomCategory();
     const product = {
       name: faker.commerce.productName(),
       description: faker.commerce.productDescription(),
@@ -92,6 +104,7 @@ export class ProductsService {
       image: faker.image.url(),
       size: faker.helpers.arrayElement(['small', 'medium', 'large']),
       percentageDiscount: faker.number.int({ min: 0, max: 40 }),
+      category,
     } as Product;
 
     product.sku = this.skuService.generateSku(product);
@@ -100,8 +113,8 @@ export class ProductsService {
   }
 
   async generateRandomProducts(count: number) {
-    const products = Array.from({ length: count }, () =>
-      this.generateProduct(),
+    const products = await Promise.all(
+      Array.from({ length: count }, async () => await this.generateProduct()),
     );
 
     return await this.repo.save(products);

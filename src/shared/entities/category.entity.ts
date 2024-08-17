@@ -17,6 +17,6 @@ export class Category {
   @Column()
   name: string;
 
-  @ManyToOne(() => Product, (product) => product.category)
+  @OneToMany(() => Product, (product) => product.category)
   products: Product[];
 }

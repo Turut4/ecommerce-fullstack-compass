@@ -38,6 +38,10 @@ export class CreateProductDto {
   @IsNumber()
   stock: number;
 
+  @IsNotEmpty()
+  @IsString()
+  categoryId: string;
+
   @IsOptional()
   @IsNumber()
   @Max(40)

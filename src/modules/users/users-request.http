@@ -3,8 +3,8 @@ POST  http://localhost:3000/users/auth/signup
 Content-Type: application/json
 
 {
-  "username": "pedro",
-  "email":"pedro@gmail.com",
+  "username": "carlo",
+  "email":"carlo@gmail.com",
   "password": "test1234",
   "role": "admin"
 }
@@ -29,7 +29,7 @@ GET http://localhost:3000/users
 
 
 ### Find user by id
-GET http://localhost:3000/users/5357abdf-11a1-4a45-8c98-53baa3a22c7c
+GET http://localhost:3000/users/99f362b1-2ef3-42fe-815d-2a5fa51e4da7
 
 ###Delete user
 DELETE http://localhost:3000/users/5357abdf-11a1-4a45-8c98-53baa3a22c7c
@@ -54,4 +54,4 @@ Content-Type: application/json
 
 
 ###gen users
-POST http://localhost:3000/users/seed
+POST http://localhost:3000/users/seed/1

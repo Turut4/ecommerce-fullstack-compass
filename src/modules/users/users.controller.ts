@@ -32,11 +32,7 @@ export class UsersController {
 
   @Post('auth/signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signup(
-      body.email,
-      body.password,
-      body.username,
-    );
+    const user = await this.authService.signup(body);
     session.userId = user.id;
     return user;
   }
@@ -77,7 +73,7 @@ export class UsersController {
 
   @Get()
   async findUsers(@Query('email') email: string): Promise<User[]> {
-    return this.usersService.find(email)
+    return this.usersService.find(email);
   }
 
   @Get('/:id')
@@ -95,5 +91,10 @@ export class UsersController {
   @Post('seed/:count')
   async seedUsers(@Param('count') count: string): Promise<User[]> {
     return this.usersService.createRandomUsers(parseInt(count));
+  }
+
+  @Get('/gencarts')
+  async populateCarts() {
+    return this.usersService.populateCarts();
   }
 }

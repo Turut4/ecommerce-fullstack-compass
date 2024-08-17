@@ -14,12 +14,12 @@ Content-Type: application/json
 }
 
 ###Find all products || product by name
-GET http://localhost:3000/products?name=p
+GET http://localhost:3000/products?
 
 ### Find product by id
-GET http://localhost:3000/products/MON01GR
+GET http://localhost:3000/products/MOTR03YE
 
-###Update user
+###Update product
 PATCH http://localhost:3000/products/MON01GR
 Content-Type: application/json
 

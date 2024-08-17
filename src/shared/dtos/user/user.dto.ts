@@ -1,4 +1,5 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
+import { Cart } from 'src/shared/entities/cart.entity';
 
 export class UserDto {
   @Expose()
@@ -9,4 +10,8 @@ export class UserDto {
 
   @Expose()
   email: string;
+
+  @Expose()
+  @Transform(({ obj }) => obj.cart.id)
+  cart: Cart;
 }

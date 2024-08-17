@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/modules/users/users.service';
 import { PasswordService } from './password/password.service';
+import { CreateUserDto } from 'src/shared/dtos/user/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -9,9 +10,11 @@ export class AuthService {
     private readonly passwordService: PasswordService,
   ) {}
 
-  async signup(email: string, password: string, username: string) {
+  async signup(createUserDto: CreateUserDto) {
+    const { email, password, username } = createUserDto;
     const users = await this.userService.find(email);
     const hashedPassword = await this.passwordService.hashPassword(password);
+
     if (users.length) throw new BadRequestException('Email already in use');
 
     const user = this.userService.create(email, hashedPassword, username);

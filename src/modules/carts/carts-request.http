@@ -1,0 +1,4 @@
+GET http://localhost:3000/carts
+
+###delete cart
+DELETE http://localhost:3000/carts/ad606e55-c611-42c7-80be-46b4b59421b7

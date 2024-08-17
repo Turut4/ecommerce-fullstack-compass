@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateUserDto } from 'src/shared/dtos/user/update-user.dto';
 import { PasswordService } from './auth/password/password.service';
+import { CartsService } from '../carts/carts.service';
 
 const { faker } = require('@faker-js/faker');
 
@@ -16,6 +17,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User) private readonly repo: Repository<User>,
     private readonly passwordService: PasswordService,
+    private readonly cartService: CartsService,
   ) {}
 
   async create(
@@ -23,17 +25,23 @@ export class UsersService {
     password: string,
     username: string,
   ): Promise<User> {
-    const user = this.repo.create({ email, password, username });
+    const cart = await this.cartService.create();
+    const user = this.repo.create({ email, password, username, cart });
 
     return this.repo.save(user);
   }
 
   async find(email: string): Promise<User[]> {
-    return this.repo.findBy({ email });
+    const users = await this.repo.findBy({ email });
+
+    return users;
   }
 
   async findOne(id: string) {
-    const user = await this.repo.findOneBy({ id });
+    const user = await this.repo.findOne({
+      where: { id },
+      relations: ['cart'],
+    });
     if (!id) return null;
     return user;
   }
@@ -79,5 +87,16 @@ export class UsersService {
 
     const users: User[] = Array.from({ length: count }, createRandomUser);
     return await this.repo.save(users);
+  }
+
+  async populateCarts() {
+    const users = await this.repo.find();
+
+    users.map(async (user) => {
+      user.cart === null
+        ? (user.cart = await this.cartService.create())
+        : (user.cart = user.cart);
+      await this.repo.save(user);
+    });
   }
 }

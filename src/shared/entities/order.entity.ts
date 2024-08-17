@@ -5,9 +5,12 @@ import {
   Column,
   OneToOne,
   JoinTable,
+  OneToMany,
+  ManyToMany,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Cart } from './cart.entity';
+import { Product } from './product.entity';
 
 @Entity('orders')
 export class Order {
@@ -17,9 +20,8 @@ export class Order {
   @Column()
   totalPrice: number;
 
-  @OneToOne(() => Cart, (cart) => cart.order)
-  @JoinTable()
-  cart: Cart;
+  @ManyToMany(() => Product, (product) => product.orders, { eager: true })
+  products: Product[];
 
   @ManyToOne(() => User, (user) => user.orders)
   user: User;

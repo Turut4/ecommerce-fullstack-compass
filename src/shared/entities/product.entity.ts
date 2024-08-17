@@ -51,6 +51,9 @@ export class Product {
   @JoinTable()
   carts: Cart[];
 
-  @OneToMany(() => Category, (category) => category.products)
+  @ManyToOne(() => Category, (category) => category.products, { eager: true })
   category: Category;
+
+  @ManyToMany(() => Order, (order) => order.products)
+  orders: Order[];
 }

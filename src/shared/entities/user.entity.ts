@@ -6,6 +6,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   OneToOne,
+  JoinTable,
+  JoinColumn,
 } from 'typeorm';
 import { Cart } from './cart.entity';
 import { Order } from './order.entity';
@@ -15,13 +17,13 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   username: string;
 
   @CreateDateColumn()
@@ -30,7 +32,7 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => Cart, (carts) => carts.user)
+  @OneToOne(() => Cart, (cart) => cart.user, { cascade: true, eager: true })
   cart: Cart;
 
   @OneToMany(() => Order, (orders) => orders.user)

@@ -39,4 +39,9 @@ export class CategoriesController {
   removeCategory(@Param('id') id: string): Promise<Category> {
     return this.categoriesService.remove(id);
   }
+
+  @Get('seed/:amount')
+  seedCategories(@Param('amount') amount: number) {
+    return this.categoriesService.genrateRandomCategories(amount);
+  }
 }

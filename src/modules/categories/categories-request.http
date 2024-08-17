@@ -4,15 +4,18 @@ Content-Type: application/json
 
 {
   "name": "cama",
-  "productsId": ["MORE03YE"]
+  "productsId": ["MOTR03YE", "ELEG02#9", "HAND01#C"]
 
 }
 
 ###get all categories
-GET http://localhost:3000/categories/
+GET http://localhost:3000/categories
 
 ###get a category
-GET http://localhost:3000/categories/7301afc5-458c-4014-85c0-e3701d384fe7
+GET http://localhost:3000/categories/81aaebc5-f102-4f40-af41-223f554222c6
 
 ###delete categoria
-DELETE http://localhost:3000/categories/ec56e08c-8cfc-48e2-9716-132c7a57f998
+DELETE http://localhost:3000/categories/21263a50-35e8-42b3-9b05-4630481b2c34
+
+### seed
+GET http://localhost:3000/categories/seed/10
