@@ -1,6 +1,7 @@
 import {
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -18,5 +19,6 @@ export class Cart {
   user: User;
 
   @ManyToMany(() => Product, (product) => product.carts)
+  @JoinTable()
   products: Product[];
 }

@@ -93,7 +93,7 @@ export class UsersController {
     return this.usersService.createRandomUsers(parseInt(count));
   }
 
-  @Get('/gencarts')
+  @Patch('/gencarts')
   async populateCarts() {
     return this.usersService.populateCarts();
   }

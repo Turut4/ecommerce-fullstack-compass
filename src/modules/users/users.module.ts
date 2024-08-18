@@ -9,6 +9,12 @@ import { CurrentUserInterceptor } from 'src/shared/interceptors/current-user.int
 import { PasswordService } from './auth/password/password.service';
 import { CartsService } from '../carts/carts.service';
 import { Cart } from 'src/shared/entities/cart.entity';
+import { ProductsModule } from '../products/products.module';
+import { CategoriesModule } from '../categories/categories.module';
+import { CartsModule } from '../carts/carts.module';
+import { ProductsService } from '../products/products.service';
+import { Product } from 'src/shared/entities/product.entity';
+import { SkuService } from '../products/sku/sku.service';
 
 @Module({
   providers: [
@@ -16,9 +22,16 @@ import { Cart } from 'src/shared/entities/cart.entity';
     AuthService,
     PasswordService,
     CartsService,
+    ProductsService,
+    SkuService,
     { provide: APP_INTERCEPTOR, useClass: CurrentUserInterceptor },
   ],
-  imports: [TypeOrmModule.forFeature([User, Cart])],
+  imports: [
+    TypeOrmModule.forFeature([User, Cart, Product]),
+    ProductsModule,
+    CategoriesModule,
+    CartsModule,
+  ],
   controllers: [UsersController],
   exports: [UsersService, PasswordService],
 })

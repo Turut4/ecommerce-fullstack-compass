@@ -3,10 +3,9 @@ POST  http://localhost:3000/users/auth/signup
 Content-Type: application/json
 
 {
-  "username": "carlo",
-  "email":"carlo@gmail.com",
-  "password": "test1234",
-  "role": "admin"
+  "username": "dracula",
+  "email":"dracula@gmail.com",
+  "password": "test1234"
 }
 
 ###login User
@@ -55,3 +54,6 @@ Content-Type: application/json
 
 ###gen users
 POST http://localhost:3000/users/seed/1
+
+### carts for  user
+PATCH http://localhost:3000/users/gencarts
