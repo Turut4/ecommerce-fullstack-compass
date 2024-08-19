@@ -1,7 +1,8 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CartsService } from './carts.service';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { CartDto } from 'src/shared/dtos/cart/cart.dto';
+import { AddToCartDto } from 'src/shared/dtos/cart/add-to-cart.dto';
 
 @Controller('carts')
 @Serialize(CartDto)
@@ -18,12 +19,12 @@ export class CartsController {
     return this.cartsService.findByUser(userId);
   }
 
-  @Patch('/:userId/:productId')
+  @Patch('/:userId/')
   async updateCart(
     @Param('userId') userId: string,
-    @Param('productId') productId: string,
+    @Body() product: AddToCartDto,
   ) {
-    return this.cartsService.addProduct(userId, productId);
+    return this.cartsService.addProduct(userId, product);
   }
 
   @Delete('trash/:id')

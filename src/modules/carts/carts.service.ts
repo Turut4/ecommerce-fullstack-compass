@@ -4,6 +4,7 @@ import { UpdateCartDto } from 'src/shared/dtos/cart/update-cart.dto';
 import { Cart } from 'src/shared/entities/cart.entity';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../products/products.service';
+import { AddToCartDto } from 'src/shared/dtos/cart/add-to-cart.dto';
 
 @Injectable()
 export class CartsService {
@@ -36,11 +37,11 @@ export class CartsService {
     return await this.repo.find({ relations: ['user', 'products'] });
   }
 
-  async addProduct(userId: string, productId: string): Promise<Cart> {
+  async addProduct(userId: string, addToCartDto: AddToCartDto): Promise<Cart> {
     const cartToUpdate = await this.findByUser(userId);
     if (!cartToUpdate) return this.create();
 
-    const product = await this.productsService.findOne(productId);
+    const product = await this.productsService.findOne(addToCartDto.productSku);
 
     if (!product) throw new Error('Product not found');
 
