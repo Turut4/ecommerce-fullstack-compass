@@ -8,10 +8,11 @@ import { ProductsService } from '../products/products.service';
 import { ProductsModule } from '../products/products.module';
 import { SkuService } from '../products/sku/sku.service';
 import { CategoriesModule } from '../categories/categories.module';
+import { CartItem } from 'src/shared/entities/cart-item.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Cart, Product]),
+    TypeOrmModule.forFeature([Cart, Product, CartItem]),
     ProductsModule,
     CategoriesModule,
   ],

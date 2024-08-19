@@ -85,12 +85,14 @@ export class UsersService {
       } as User;
     }
 
-    const users: User[] = Array.from({ length: count }, createRandomUser);
-    users.forEach(async (user) => {
-      user.cart = await Promise.resolve(this.cartService.create());
-      console.log(user.cart);
-      console.log(user);
-    });
+    const users: User[] = await Promise.all(
+      Array.from({ length: count }, async () => {
+        const user = createRandomUser();
+        user.cart = await this.cartService.create();
+        console.log(user);
+        return user;
+      }),
+    );
 
     return await this.repo.save(users);
   }

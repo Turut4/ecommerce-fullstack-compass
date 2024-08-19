@@ -12,6 +12,6 @@ export class UserDto {
   email: string;
 
   @Expose()
-  @Transform(({ obj }) => obj.cart.id)
+  @Transform(({ obj }) => (obj.cart ? obj.cart.id : null))
   cart: Cart;
 }

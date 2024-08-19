@@ -11,6 +11,7 @@ import {
 import { Cart } from './cart.entity';
 import { Category } from './category.entity';
 import { Order } from './order.entity';
+import { CartItem } from './cart-item.entity';
 
 export enum Size {
   SMALL = 'small',
@@ -50,9 +51,8 @@ export class Product {
   @Column()
   image: string;
 
-  @ManyToMany(() => Cart, (cart) => cart.products)
-  @JoinTable()
-  carts: Cart[];
+  @OneToMany(() => CartItem, (cartItems) => cartItems.product)
+  cartItems: CartItem[];
 
   @ManyToOne(() => Category, (category) => category.products, { eager: true })
   category: Category;

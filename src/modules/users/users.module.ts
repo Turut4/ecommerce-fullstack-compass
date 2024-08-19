@@ -15,6 +15,7 @@ import { CartsModule } from '../carts/carts.module';
 import { ProductsService } from '../products/products.service';
 import { Product } from 'src/shared/entities/product.entity';
 import { SkuService } from '../products/sku/sku.service';
+import { CartItem } from 'src/shared/entities/cart-item.entity';
 
 @Module({
   providers: [
@@ -27,7 +28,7 @@ import { SkuService } from '../products/sku/sku.service';
     { provide: APP_INTERCEPTOR, useClass: CurrentUserInterceptor },
   ],
   imports: [
-    TypeOrmModule.forFeature([User, Cart, Product]),
+    TypeOrmModule.forFeature([User, Cart, Product, CartItem]),
     ProductsModule,
     CategoriesModule,
     CartsModule,

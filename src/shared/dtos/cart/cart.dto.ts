@@ -12,6 +12,6 @@ export class CartDto {
   user: UserDto;
 
   @Expose()
-  @Transform(({ obj }) => obj.products)
-  products: Product[];
+  @Transform(({ obj }) => obj.cartItems)
+  item: Product[];
 }

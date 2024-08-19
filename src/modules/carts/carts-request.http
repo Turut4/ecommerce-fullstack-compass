@@ -1,10 +1,15 @@
 GET http://localhost:3000/carts
 
 ###get cart by user
-GET http://localhost:3000/carts/4200ef55-7a5c-4a76-82bd-7bd3afbe9e51
-
+GET http://localhost:3000/carts/35c73640-6d78-4957-bc69-ff144bf06f1e
 ### Add prouct
-PATCH http://localhost:3000/carts/
+PATCH http://localhost:3000/carts/35c73640-6d78-4957-bc69-ff144bf06f1e
+Content-Type: application/json
+
+{
+  "productId": "4bd241e3-22bd-4802-94dc-f6087c9579bd",
+  "quantity": 5
+}
 
 ###delete cart
 DELETE http://localhost:3000/carts/ad606e55-c611-42c7-80be-46b4b59421b7

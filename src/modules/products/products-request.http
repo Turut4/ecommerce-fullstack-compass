@@ -32,4 +32,4 @@ DELETE http://localhost:3000/products/986db272-8445-4ab9-b9a6-011c92374dca
 
 
 ###gen products
-GET http://localhost:3000/products/seed/10
+GET http://localhost:3000/products/seed/40
