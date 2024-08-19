@@ -13,7 +13,7 @@ POST  http://localhost:3000/users/auth/signin
 Content-Type: application/json
 
 {
-  "email":"pedro@gmail.com",
+  "email":"dracula@gmail.com",
   "password": "test1234"
 }
 
@@ -31,8 +31,7 @@ GET http://localhost:3000/users
 GET http://localhost:3000/users/99f362b1-2ef3-42fe-815d-2a5fa51e4da7
 
 ###Delete user
-DELETE http://localhost:3000/users/5357abdf-11a1-4a45-8c98-53baa3a22c7c
-
+DELETE http://localhost:3000/users/785cd4ff-96db-4618-a29b-4d203695eaf3
 ### update users info
 PATCH http://localhost:3000/users/update/d7eff0d2-c397-4b8d-a3b4-5d4d40b525fc
 Content-Type: application/json

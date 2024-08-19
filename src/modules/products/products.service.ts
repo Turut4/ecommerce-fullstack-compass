@@ -44,19 +44,19 @@ export class ProductsService {
     return await this.repo.save(product);
   }
 
-  async find(): Promise<Product[]> {
+  async findAll(): Promise<Product[]> {
     return await this.repo.find();
   }
 
-  async findByName(name: string): Promise<Product[]> {
+  async findManyByName(name: string): Promise<Product[]> {
     return await this.repo
       .createQueryBuilder()
       .where('name LIKE :name', { name: `%${name}%` })
       .getMany();
   }
 
-  async findOne(sku: string): Promise<Product> {
-    const product = await this.repo.findOneBy({ sku });
+  async findOne(id: string): Promise<Product> {
+    const product = await this.repo.findOneBy({ id });
     if (!product) throw new NotFoundException('Product not Found...');
 
     return product;

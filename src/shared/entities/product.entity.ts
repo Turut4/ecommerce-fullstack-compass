@@ -20,7 +20,10 @@ export enum Size {
 
 @Entity('products')
 export class Product {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
   sku: string;
 
   @Column()

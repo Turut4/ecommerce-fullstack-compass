@@ -33,9 +33,11 @@ export class User {
   updated_at: Date;
 
   @OneToOne(() => Cart, (cart) => cart.user, {
+    cascade: true,
     onDelete: 'CASCADE',
     eager: true,
   })
+  @JoinColumn()
   cart: Cart;
 
   @OneToMany(() => Order, (orders) => orders.user)

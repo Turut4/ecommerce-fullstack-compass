@@ -4,7 +4,7 @@ GET http://localhost:3000/carts
 GET http://localhost:3000/carts/4200ef55-7a5c-4a76-82bd-7bd3afbe9e51
 
 ### Add prouct
-PATCH http://localhost:3000/carts/4200ef55-7a5c-4a76-82bd-7bd3afbe9e51/MOTR03YE
+PATCH http://localhost:3000/carts/
 
 ###delete cart
 DELETE http://localhost:3000/carts/ad606e55-c611-42c7-80be-46b4b59421b7

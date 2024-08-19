@@ -15,7 +15,6 @@ export class Cart {
   id: string;
 
   @OneToOne(() => User, (user) => user.cart)
-  @JoinColumn()
   user: User;
 
   @ManyToMany(() => Product, (product) => product.carts)

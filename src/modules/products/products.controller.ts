@@ -24,32 +24,32 @@ export class ProductsController {
 
   @Get()
   findAllProducts() {
-    return this.productsService.find();
+    return this.productsService.findAll();
   }
 
   @Get()
   findProductsByName(@Query('name') name: string) {
-    return this.productsService.findByName(name);
+    return this.productsService.findManyByName(name);
   }
 
-  @Get('/:sku')
-  findOne(@Param('sku') sku: string) {
-    return this.productsService.findOne(sku);
+  @Get('/:id')
+  findOne(@Param('id') id: string) {
+    return this.productsService.findOne(id);
   }
 
-  @Patch('/:sku')
-  updateProduct(@Param('sku') sku: string, @Body() body: UpdateProductDto) {
-    return this.productsService.update(sku, body);
+  @Patch('/:id')
+  updateProduct(@Param('id') id: string, @Body() body: UpdateProductDto) {
+    return this.productsService.update(id, body);
   }
 
-  @Patch(':sku')
-  updateProductStock(@Param('sku') sku: string, @Body() body: UpdateStockDto) {
-    return this.productsService.updateStock(sku, body);
+  @Patch(':id')
+  updateProductStock(@Param('id') id: string, @Body() body: UpdateStockDto) {
+    return this.productsService.updateStock(id, body);
   }
 
-  @Delete('/:sku')
-  deleteProduct(@Param('sku') sku: string) {
-    return this.productsService.delete(sku);
+  @Delete('/:id')
+  deleteProduct(@Param('id') id: string) {
+    return this.productsService.delete(id);
   }
 
   @Get('/seed/:count')

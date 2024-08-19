@@ -24,6 +24,7 @@ import { CategoriesService } from './modules/categories/categories.service';
       password: 'senha',
       database: 'banco',
       entities: ['./**/*.entity.js'],
+      migrations: ['src/migrations/**/*.ts'],
       synchronize: true,
     }),
     UsersModule,

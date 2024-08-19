@@ -13,9 +13,9 @@ export class SkuService {
 
   generateSizeCode(size: Size): string {
     const sizeNumber = {
-      [Size.SMALL]: '01',
-      [Size.MEDIUM]: '02',
-      [Size.LARGE]: '03',
+      [Size.SMALL]: 'S',
+      [Size.MEDIUM]: 'M',
+      [Size.LARGE]: 'L',
     };
     return sizeNumber[size];
   }
