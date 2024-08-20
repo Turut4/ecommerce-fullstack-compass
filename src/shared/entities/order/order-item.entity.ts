@@ -1,7 +1,14 @@
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Product } from '../product.entity';
 import { Cart } from '../cart/cart.entity';
 
+@Entity('order_items')
 export class OrderItem {
   @PrimaryGeneratedColumn()
   id: string;
