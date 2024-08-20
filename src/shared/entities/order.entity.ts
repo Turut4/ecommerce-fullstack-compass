@@ -20,8 +20,7 @@ export class Order {
   @Column()
   totalPrice: number;
 
-  @ManyToMany(() => Product, (product) => product.orders, { eager: true })
-  products: Product[];
+ // @OneToOne(()=> Cart, cart => cart.)
 
   @ManyToOne(() => User, (user) => user.orders)
   user: User;

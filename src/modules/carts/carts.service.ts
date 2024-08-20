@@ -59,6 +59,77 @@ export class CartsService {
     });
 
     cartToUpdate.cartItems.push(item);
+    console.log(cartToUpdate.cartItems);
+
+    return await this.cartRepo.save(cartToUpdate);
+  }
+
+  async increaseProductQuantity(
+    userId: string,
+    productId: string,
+  ): Promise<Cart> {
+    const cartToUpdate = await this.findByUser(userId);
+
+    if (!cartToUpdate) {
+      throw new Error('Cart not found');
+    }
+
+    const item = cartToUpdate.cartItems.find(
+      (item) => item.product.id === productId,
+    );
+
+    if (!item) {
+      throw new Error('Product not found in cart');
+    }
+
+    item.quantity++;
+
+    return await this.cartRepo.save(cartToUpdate);
+  }
+
+  async decreaseProductQuantity(
+    userId: string,
+    productId: string,
+  ): Promise<Cart> {
+    const cartToUpdate = await this.findByUser(userId);
+
+    if (!cartToUpdate) {
+      throw new Error('Cart not found');
+    }
+
+    const item = cartToUpdate.cartItems.find(
+      (item) => item.product.id === productId,
+    );
+
+    if (!item) {
+      throw new Error('Product not found in cart');
+    }
+
+    if (item.quantity === 1) {
+      return this.removeProduct(userId, productId);
+    }
+
+    item.quantity--;
+
+    return await this.cartRepo.save(cartToUpdate);
+  }
+
+  async removeProduct(userId: string, productId: string): Promise<Cart> {
+    const cartToUpdate = await this.findByUser(userId);
+
+    if (!cartToUpdate) {
+      throw new Error('Cart not found');
+    }
+
+    const itemIndex = cartToUpdate.cartItems.findIndex(
+      (item) => item.product.id === productId,
+    );
+
+    if (itemIndex === -1) {
+      throw new Error('Product not found in cart');
+    }
+
+    cartToUpdate.cartItems.splice(itemIndex, 1);
 
     return await this.cartRepo.save(cartToUpdate);
   }

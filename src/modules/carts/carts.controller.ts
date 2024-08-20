@@ -5,7 +5,7 @@ import { CartDto } from 'src/shared/dtos/cart/cart.dto';
 import { AddToCartDto } from 'src/shared/dtos/cart/add-to-cart.dto';
 
 @Controller('carts')
-@Serialize(CartDto)
+//@Serialize(CartDto)
 export class CartsController {
   constructor(private readonly cartsService: CartsService) {}
 

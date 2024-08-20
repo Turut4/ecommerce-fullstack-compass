@@ -51,9 +51,6 @@ export class Product {
   @Column()
   image: string;
 
-  @OneToMany(() => CartItem, (cartItems) => cartItems.product)
-  cartItems: CartItem[];
-
   @ManyToOne(() => Category, (category) => category.products, { eager: true })
   category: Category;
 

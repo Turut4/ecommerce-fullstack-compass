@@ -52,7 +52,7 @@ Content-Type: application/json
 
 
 ###gen users
-POST http://localhost:3000/users/seed/1
+POST http://localhost:3000/users/seed/10
 
 ### carts for  user
 PATCH http://localhost:3000/users/gencarts
