@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Product } from '../product.entity';
 import { Cart } from '../cart/cart.entity';
+import { Order } from './order.entity';
 
 @Entity('order_items')
 export class OrderItem {
@@ -19,7 +20,7 @@ export class OrderItem {
   @Column({ default: 1 })
   quantity: number;
 
-  @ManyToOne(() => Cart, (cart) => cart.orderItems)
-  @JoinColumn({ name: 'orderId' })
+  @ManyToOne(() => Order)
+  @JoinColumn({ name: 'order_id' })
   order: OrderItem;
 }

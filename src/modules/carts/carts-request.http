@@ -4,16 +4,15 @@ GET http://localhost:3000/carts
 GET http://localhost:3000/carts/b7c13bdc-ad63-4573-b521-e45ba8470964
 
 ### Add prouct
-PATCH http://localhost:3000/carts/b7c13bdc-ad63-4573-b521-e45ba8470964
+PATCH http://localhost:3000/carts/8d2834dc-7ec2-4152-a81d-67d19699e313
 Content-Type: application/json
 
 {
-  "productId": "23d6ff59-bcce-4f4c-bdda-be0522dc601c",
-  "quantity": 5
+  "productId": "164a9e65-4fce-4efc-8870-d81888ea09d5"
 }
 
 ###delete cart
-DELETE http://localhost:3000/carts/ad606e55-c611-42c7-80be-46b4b59421b7
+DELETE http://localhost:3000/carts/trash/6c41b200-6cd0-4d3f-8daa-c752a3bf287f
 
 ###dele useless carts
 DELETE http://localhost:3000/carts/trash

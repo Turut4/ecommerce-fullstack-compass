@@ -22,9 +22,6 @@ import { CartItem } from 'src/shared/entities/cart/cart-item.entity';
     UsersService,
     AuthService,
     PasswordService,
-    CartsService,
-    ProductsService,
-    SkuService,
     { provide: APP_INTERCEPTOR, useClass: CurrentUserInterceptor },
   ],
   imports: [
@@ -34,6 +31,6 @@ import { CartItem } from 'src/shared/entities/cart/cart-item.entity';
     CartsModule,
   ],
   controllers: [UsersController],
-  exports: [UsersService, PasswordService],
+  exports: [UsersService, PasswordService, AuthService],
 })
 export class UsersModule {}

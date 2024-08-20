@@ -46,16 +46,23 @@ export class CartsService {
 
   async addProduct(userId: string, addToCartDto: AddToCartDto): Promise<Cart> {
     const cartToUpdate = await this.findByUser(userId);
+    const productExists = cartToUpdate.cartItems.find(
+      (item) => item.product.id === addToCartDto.productId,
+    );
+
+    if (productExists)
+      return this.increaseProductQuantity(userId, addToCartDto.productId);
 
     if (!cartToUpdate) return this.create();
 
     const product = await this.productsService.findOne(addToCartDto.productId);
 
     if (!product) throw new Error('Product not found');
+
     const item = this.cartItemRepo.create({
       cart: cartToUpdate,
-      quantity: addToCartDto.quantity,
       product,
+      quantity: 1,
     });
 
     cartToUpdate.cartItems.push(item);
@@ -81,7 +88,7 @@ export class CartsService {
     if (!item) {
       throw new Error('Product not found in cart');
     }
-
+    
     item.quantity++;
 
     return await this.cartRepo.save(cartToUpdate);

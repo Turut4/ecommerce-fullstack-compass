@@ -15,12 +15,13 @@ export class CartItem {
   id: string;
 
   @ManyToOne(() => Product, { eager: true })
+  @JoinColumn({ name: 'product_id' })
   product: Product;
 
   @Column({ default: 1 })
   quantity: number;
 
-  @ManyToOne(() => Cart, (cart) => cart.cartItems)
+  @ManyToOne(() => Cart, (cart) => cart.cartItems, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'cartId' })
   cart: Cart;
 }

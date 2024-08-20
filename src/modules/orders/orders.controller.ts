@@ -1,4 +1,33 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { OrdersService } from './orders.service';
+import { CreateOrderDto } from 'src/shared/dtos/order/create-order.dto';
 
 @Controller('orders')
-export class OrdersController {}
+export class OrdersController {
+  constructor(private readonly orderService: OrdersService) {}
+
+  @Post('/:id')
+  async create(@Param('id') userId: string, @Body() body: CreateOrderDto) {
+    return this.orderService.create(userId, body);
+  }
+
+  @Get()
+  async findAll() {
+    return this.orderService.findAll();
+  }
+
+  @Get('/:id')
+  async findOne(@Param('id') id: string) {
+    return this.orderService.findOne(id);
+  }
+
+  @Get('/user/:id')
+  async findByUser(@Param('id') userId: string) {
+    return this.orderService.findByUser(userId);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id: string) {
+    return this.orderService.delete(id);
+  }
+}

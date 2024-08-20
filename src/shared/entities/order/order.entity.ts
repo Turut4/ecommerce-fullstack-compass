@@ -11,7 +11,7 @@ import { OrderItem } from './order-item.entity';
 @Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   total: number;
@@ -20,6 +20,9 @@ export class Order {
     cascade: true,
   })
   orderItems: OrderItem[];
+
+  @Column()
+  address: string;
 
   @ManyToOne(() => User, (user) => user.orders)
   user: User;

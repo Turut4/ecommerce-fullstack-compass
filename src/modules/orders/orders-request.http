@@ -1,0 +1,10 @@
+### create an order
+POST http://localhost:3000/orders/8d2834dc-7ec2-4152-a81d-67d19699e313
+Content-Type: application/json
+
+{
+  "address": "av A, 648, santa helena"
+}
+
+### find all orders
+GET http://localhost:3000/orders/

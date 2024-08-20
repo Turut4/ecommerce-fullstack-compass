@@ -39,6 +39,5 @@ import { CategoriesService } from './modules/categories/categories.service';
     CategoriesController,
     CartsController,
   ],
-  providers: [AuthService],
 })
 export class AppModule {}

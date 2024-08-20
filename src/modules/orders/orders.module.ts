@@ -24,5 +24,6 @@ import { CartsModule } from '../carts/carts.module';
     CategoriesModule,
     CartsModule,
   ],
+  exports: [OrdersService],
 })
 export class OrdersModule {}
