@@ -2,6 +2,7 @@ GET http://localhost:3000/carts
 
 ###get cart by user
 GET http://localhost:3000/carts/b7c13bdc-ad63-4573-b521-e45ba8470964
+
 ### Add prouct
 PATCH http://localhost:3000/carts/b7c13bdc-ad63-4573-b521-e45ba8470964
 Content-Type: application/json

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateCartDto } from 'src/shared/dtos/cart/update-cart.dto';
 import { Cart } from 'src/shared/entities/cart/cart.entity';
@@ -35,7 +35,7 @@ export class CartsService {
       relations: ['user', 'cartItems'],
     });
 
-    if (!userCart) return this.create();
+    if (!userCart) throw new BadRequestException('Cart not found');
 
     return userCart;
   }

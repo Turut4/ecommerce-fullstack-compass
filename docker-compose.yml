@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:latest
-    container_name: meu_postgres
+    container_name: ecommerce-backend
     environment:
       POSTGRES_USER: usuario
       POSTGRES_PASSWORD: senha

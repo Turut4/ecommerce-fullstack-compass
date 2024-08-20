@@ -12,7 +12,7 @@ Content-Type: application/json
 GET http://localhost:3000/categories
 
 ###get a category
-GET http://localhost:3000/categories/81aaebc5-f102-4f40-af41-223f554222c6
+GET http://localhost:3000/categories/68460830-f593-45e0-96ad-efe4de311544
 
 ###delete categoria
 DELETE http://localhost:3000/categories/21263a50-35e8-42b3-9b05-4630481b2c34
