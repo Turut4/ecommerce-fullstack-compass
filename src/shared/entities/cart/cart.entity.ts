@@ -20,4 +20,5 @@ export class Cart {
     eager: true,
   })
   cartItems: CartItem[];
+  orderItems: any;
 }

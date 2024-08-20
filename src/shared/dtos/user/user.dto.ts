@@ -1,5 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
-import { Cart } from 'src/shared/entities/cart.entity';
+import { Cart } from 'src/shared/entities/cart/cart.entity';
 
 export class UserDto {
   @Expose()

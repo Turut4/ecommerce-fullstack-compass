@@ -3,8 +3,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   Column,
+  OneToMany,
 } from 'typeorm';
 import { User } from '../user.entity';
+import { OrderItem } from './order-item.entity';
 
 @Entity('orders')
 export class Order {
@@ -12,9 +14,12 @@ export class Order {
   id: number;
 
   @Column()
-  totalPrice: number;
+  total: number;
 
-  // @OneToOne(()=> Cart, cart => cart.)
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
+    cascade: true,
+  })
+  orderItems: OrderItem[];
 
   @ManyToOne(() => User, (user) => user.orders)
   user: User;
