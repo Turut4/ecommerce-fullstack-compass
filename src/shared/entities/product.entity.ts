@@ -8,10 +8,10 @@ import {
   PrimaryColumn,
   OneToMany,
 } from 'typeorm';
-import { Cart } from './cart.entity';
+import { Cart } from './cart/cart.entity';
 import { Category } from './category.entity';
-import { Order } from './order.entity';
-import { CartItem } from './cart-item.entity';
+import { Order } from './order/order.entity';
+import { CartItem } from './cart/cart-item.entity';
 
 export enum Size {
   SMALL = 'small',
@@ -54,6 +54,4 @@ export class Product {
   @ManyToOne(() => Category, (category) => category.products, { eager: true })
   category: Category;
 
-  @ManyToMany(() => Order, (order) => order.products)
-  orders: Order[];
 }

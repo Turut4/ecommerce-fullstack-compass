@@ -4,7 +4,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../user.entity';
 import { CartItem } from './cart-item.entity';
 
 @Entity('carts')

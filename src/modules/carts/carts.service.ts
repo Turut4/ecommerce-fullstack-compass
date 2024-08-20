@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateCartDto } from 'src/shared/dtos/cart/update-cart.dto';
-import { Cart } from 'src/shared/entities/cart.entity';
+import { Cart } from 'src/shared/entities/cart/cart.entity';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../products/products.service';
 import { AddToCartDto } from 'src/shared/dtos/cart/add-to-cart.dto';
-import { CartItem } from 'src/shared/entities/cart-item.entity';
+import { CartItem } from 'src/shared/entities/cart/cart-item.entity';
 
 @Injectable()
 export class CartsService {

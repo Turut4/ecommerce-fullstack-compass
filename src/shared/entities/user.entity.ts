@@ -9,8 +9,8 @@ import {
   JoinTable,
   JoinColumn,
 } from 'typeorm';
-import { Cart } from './cart.entity';
-import { Order } from './order.entity';
+import { Cart } from './cart/cart.entity';
+import { Order } from './order/order.entity';
 
 @Entity('users')
 export class User {

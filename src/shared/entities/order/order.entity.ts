@@ -3,14 +3,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
-  JoinTable,
-  OneToMany,
-  ManyToMany,
 } from 'typeorm';
-import { User } from './user.entity';
-import { Cart } from './cart.entity';
-import { Product } from './product.entity';
+import { User } from '../user.entity';
 
 @Entity('orders')
 export class Order {
@@ -20,7 +14,7 @@ export class Order {
   @Column()
   totalPrice: number;
 
- // @OneToOne(()=> Cart, cart => cart.)
+  // @OneToOne(()=> Cart, cart => cart.)
 
   @ManyToOne(() => User, (user) => user.orders)
   user: User;
