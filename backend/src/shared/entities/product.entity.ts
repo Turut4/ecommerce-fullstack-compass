@@ -2,16 +2,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
   ManyToOne,
-  JoinTable,
-  PrimaryColumn,
-  OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
-import { Cart } from './cart/cart.entity';
 import { Category } from './category.entity';
-import { Order } from './order/order.entity';
-import { CartItem } from './cart/cart-item.entity';
+import { User } from './user.entity';
 
 export enum Size {
   SMALL = 'small',
@@ -54,4 +50,7 @@ export class Product {
   @ManyToOne(() => Category, (category) => category.products, { eager: true })
   category: Category;
 
+  @OneToOne(() => User)
+  @JoinColumn()
+  createdBy: User;
 }

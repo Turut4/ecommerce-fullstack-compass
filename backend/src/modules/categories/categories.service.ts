@@ -74,16 +74,26 @@ export class CategoriesService {
   }
 
   genreteRandomCategory() {
-    const category = {
-      name: faker.commerce.department(),
-    } as Category;
-    return category;
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'test'
+    ) {
+      const category = {
+        name: faker.commerce.department(),
+      } as Category;
+      return category;
+    }
   }
 
   async genrateRandomCategories(amount: number) {
-    const categories = await Promise.all(
-      Array.from({ length: amount }, this.genreteRandomCategory),
-    );
-    return await this.repo.save(categories);
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'test'
+    ) {
+      const categories = await Promise.all(
+        Array.from({ length: amount }, this.genreteRandomCategory),
+      );
+      return await this.repo.save(categories);
+    }
   }
 }

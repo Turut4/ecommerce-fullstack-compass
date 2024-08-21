@@ -18,28 +18,39 @@ const users_controller_1 = require("./modules/users/users.controller");
 const orders_controller_1 = require("./modules/orders/orders.controller");
 const categories_controller_1 = require("./modules/categories/categories.controller");
 const carts_controller_1 = require("./modules/carts/carts.controller");
+const config_1 = require("@nestjs/config");
+const auth_module_1 = require("./modules/users/auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                username: 'usuario',
-                password: 'senha',
-                database: 'banco',
-                entities: ['./**/*.entity.js'],
-                migrations: ['src/migrations/**/*.ts'],
-                synchronize: true,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+            }),
+            typeorm_1.TypeOrmModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    type: 'postgres',
+                    host: process.env.NODE_ENV === 'production'
+                        ? configService.get('POSTGRES_HOST')
+                        : 'localhost',
+                    port: configService.get('POSTGRES_PORT'),
+                    username: configService.get('POSTGRES_USER'),
+                    password: configService.get('POSTGRES_PASSWORD'),
+                    database: configService.get('POSTGRES_NAME'),
+                    entities: [__dirname + '/../**/*.entity.js'],
+                    synchronize: true,
+                }),
             }),
             users_module_1.UsersModule,
             products_module_1.ProductsModule,
             orders_module_1.OrdersModule,
             categories_module_1.CategoriesModule,
             carts_module_1.CartsModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [
             orders_controller_1.OrdersController,

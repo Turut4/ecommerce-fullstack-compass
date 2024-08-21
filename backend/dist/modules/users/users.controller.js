@@ -24,23 +24,26 @@ const login_user_dto_1 = require("../../shared/dtos/user/login-user.dto");
 const current_user_decorator_1 = require("../../shared/decorators/current-user.decorator");
 const update_user_dto_1 = require("../../shared/dtos/user/update-user.dto");
 const auth_guard_1 = require("../../shared/guards/auth.guard");
+const admin_guard_1 = require("../../shared/guards/admin.guard");
 let UsersController = class UsersController {
     constructor(usersService, authService) {
         this.usersService = usersService;
         this.authService = authService;
     }
     async createUser(body, session) {
+        const user = await this.usersService.create(body.email, body.password, body.username);
+        return user;
+    }
+    async signUp(body) {
         const user = await this.authService.signup(body);
-        session.userId = user.id;
         return user;
     }
-    async signin(body, session) {
-        const user = await this.authService.signin(body.email, body.password);
-        session.userId = user.id;
-        return user;
+    async signIn(body) {
+        const jwt = await this.authService.signin(body.email, body.password);
+        return jwt;
     }
-    signout(session) {
-        session.userId = null;
+    logOut(res) {
+        this.authService.logout();
     }
     async whoAmI(user) {
         return user;
@@ -58,6 +61,9 @@ let UsersController = class UsersController {
         const user = await this.usersService.findOne(id);
         return user;
     }
+    async deleteMe(user) {
+        return this.usersService.remove(user.id);
+    }
     async deleteUser(id) {
         return this.usersService.remove(id);
     }
@@ -67,10 +73,14 @@ let UsersController = class UsersController {
     async populateCarts() {
         return this.usersService.populateCarts();
     }
+    async turnAdmin(id) {
+        return this.usersService.turnAdmin(id);
+    }
 };
 exports.UsersController = UsersController;
 __decorate([
-    (0, common_1.Post)('auth/signup'),
+    (0, common_1.Post)('/create'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Session)()),
     __metadata("design:type", Function),
@@ -78,23 +88,30 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "createUser", null);
 __decorate([
+    (0, common_1.Post)('auth/signup'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "signUp", null);
+__decorate([
     (0, common_1.Post)('auth/signin'),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Session)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [login_user_dto_1.LoginUserDto, Object]),
+    __metadata("design:paramtypes", [login_user_dto_1.LoginUserDto]),
     __metadata("design:returntype", Promise)
-], UsersController.prototype, "signin", null);
+], UsersController.prototype, "signIn", null);
 __decorate([
-    (0, common_1.Get)('auth/signout'),
-    __param(0, (0, common_1.Session)()),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)('auth/logOut'),
+    __param(0, (0, common_1.Response)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], UsersController.prototype, "signout", null);
+], UsersController.prototype, "logOut", null);
 __decorate([
-    (0, common_1.Get)('auth/whoiam'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)('auth/whoiam'),
     __param(0, (0, current_user_decorator_1.CurrentUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.User]),
@@ -131,7 +148,16 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "findUser", null);
 __decorate([
+    (0, common_1.Delete)('/deleteMe'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "deleteMe", null);
+__decorate([
     (0, common_1.Delete)('/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -139,6 +165,7 @@ __decorate([
 ], UsersController.prototype, "deleteUser", null);
 __decorate([
     (0, common_1.Post)('seed/:count'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
     __param(0, (0, common_1.Param)('count')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -146,10 +173,19 @@ __decorate([
 ], UsersController.prototype, "seedUsers", null);
 __decorate([
     (0, common_1.Patch)('/gencarts'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "populateCarts", null);
+__decorate([
+    (0, common_1.Patch)('turnadmin/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "turnAdmin", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     (0, serialize_interceptor_1.Serialize)(user_dto_1.UserDto),

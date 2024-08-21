@@ -21,12 +21,11 @@ __decorate([
 ], CartDto.prototype, "id", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
-    (0, class_transformer_1.Transform)(({ obj }) => obj.user.id),
+    (0, class_transformer_1.Type)(() => user_dto_1.UserDto),
     __metadata("design:type", user_dto_1.UserDto)
 ], CartDto.prototype, "user", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
-    (0, class_transformer_1.Transform)(({ obj }) => obj.cartItems),
     __metadata("design:type", Array)
-], CartDto.prototype, "item", void 0);
+], CartDto.prototype, "cartItems", void 0);
 //# sourceMappingURL=cart.dto.js.map

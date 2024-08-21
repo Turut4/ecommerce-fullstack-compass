@@ -13,6 +13,7 @@ import { In, Repository } from 'typeorm';
 import { SkuService } from './sku/sku.service';
 import { UpdateStockDto } from 'src/shared/dtos/product/update-stock.dto';
 import { CategoriesService } from '../categories/categories.service';
+import { User } from 'src/shared/entities/user.entity';
 
 const { faker } = require('@faker-js/faker');
 
@@ -25,9 +26,13 @@ export class ProductsService {
     private readonly categoriesService: CategoriesService,
   ) {}
 
-  async create(createProductDto: CreateProductDto): Promise<Product> {
+  async create(
+    admin: User,
+    createProductDto: CreateProductDto,
+  ): Promise<Product> {
     const product = this.repo.create(createProductDto);
     product.sku = this.skuService.generateSku(product);
+    product.createdBy = admin;
 
     const productExists = await this.repo.findOne({
       where: { sku: product.sku },
@@ -94,29 +99,39 @@ export class ProductsService {
   }
 
   async generateProduct() {
-    const category = await this.categoriesService.getRandomCategory();
-    const product = {
-      name: faker.commerce.productName(),
-      description: faker.commerce.productDescription(),
-      price: parseFloat(faker.commerce.price()),
-      color: faker.color.rgb(),
-      stock: faker.number.int({ min: 0, max: 100 }),
-      image: faker.image.url(),
-      size: faker.helpers.arrayElement(['small', 'medium', 'large']),
-      percentageDiscount: faker.number.int({ min: 0, max: 40 }),
-      category,
-    } as Product;
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'test'
+    ) {
+      const category = await this.categoriesService.getRandomCategory();
+      const product = {
+        name: faker.commerce.productName(),
+        description: faker.commerce.productDescription(),
+        price: parseFloat(faker.commerce.price()),
+        color: faker.color.rgb(),
+        stock: faker.number.int({ min: 0, max: 100 }),
+        image: faker.image.url(),
+        size: faker.helpers.arrayElement(['small', 'medium', 'large']),
+        percentageDiscount: faker.number.int({ min: 0, max: 40 }),
+        category,
+      } as Product;
 
-    product.sku = this.skuService.generateSku(product);
+      product.sku = this.skuService.generateSku(product);
 
-    return product;
+      return product;
+    }
   }
 
   async generateRandomProducts(count: number) {
-    const products = await Promise.all(
-      Array.from({ length: count }, async () => await this.generateProduct()),
-    );
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'test'
+    ) {
+      const products = await Promise.all(
+        Array.from({ length: count }, async () => await this.generateProduct()),
+      );
 
-    return await this.repo.save(products);
+      return await this.repo.save(products);
+    }
   }
 }

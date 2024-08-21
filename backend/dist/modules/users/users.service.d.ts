@@ -15,4 +15,5 @@ export declare class UsersService {
     remove(id: string): Promise<User>;
     createRandomUsers(count: number): Promise<User[]>;
     populateCarts(): Promise<void>;
+    turnAdmin(id: string): Promise<User>;
 }

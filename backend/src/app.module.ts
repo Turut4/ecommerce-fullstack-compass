@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { CategoriesModule } from './modules/categories/categories.module';
@@ -9,29 +9,37 @@ import { UsersController } from './modules/users/users.controller';
 import { OrdersController } from './modules/orders/orders.controller';
 import { CategoriesController } from './modules/categories/categories.controller';
 import { CartsController } from './modules/carts/carts.controller';
-import { AuthService } from './modules/users/auth/auth.service';
-import { PasswordService } from './modules/users/auth/password/password.service';
-import { SkuService } from './modules/products/sku/sku.service';
-import { CategoriesService } from './modules/categories/categories.service';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './modules/users/auth/auth.module';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'usuario',
-      password: 'senha',
-      database: 'banco',
-      entities: ['./**/*.entity.js'],
-      migrations: ['src/migrations/**/*.ts'],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): TypeOrmModuleOptions => ({
+        type: 'postgres',
+        host:
+          process.env.NODE_ENV === 'production'
+            ? configService.get<string>('POSTGRES_HOST')
+            : 'localhost',
+        port: configService.get<number>('POSTGRES_PORT'),
+        username: configService.get<string>('POSTGRES_USER'),
+        password: configService.get<string>('POSTGRES_PASSWORD'),
+        database: configService.get<string>('POSTGRES_NAME'),
+        entities: [__dirname + '/../**/*.entity.js'],
+        synchronize: true,
+      }),
     }),
     UsersModule,
     ProductsModule,
     OrdersModule,
     CategoriesModule,
     CartsModule,
+    AuthModule,
   ],
   controllers: [
     OrdersController,

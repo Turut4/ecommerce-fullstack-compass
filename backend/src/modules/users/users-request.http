@@ -3,8 +3,8 @@ POST  http://localhost:3000/users/auth/signup
 Content-Type: application/json
 
 {
-  "username": "pedro",
-  "email":"pedro@gmail.com",
+  "username": "Dracula",
+  "email":"Dracula@gmail.com",
   "password": "test1234"
 }
 
@@ -12,16 +12,18 @@ Content-Type: application/json
 POST  http://localhost:3000/users/auth/signin
 Content-Type: application/json
 
+
 {
-  "email":"dracula@gmail.com",
+  "email":"Dracula@gmail.com",
   "password": "test1234"
 }
 
 ### sign out
-GET http://localhost:3000/auth/signout
+GET http://localhost:3000/users/auth/logOut
 
 ###get current signin user
 GET http://localhost:3000/users/auth/whoiam
+
 
 ### Find all Users
 GET http://localhost:3000/users
@@ -52,7 +54,11 @@ Content-Type: application/json
 
 
 ###gen users
-POST http://localhost:3000/users/seed/10
+POST http://localhost:3000/users/seed/1
 
 ### carts for  user
 PATCH http://localhost:3000/users/gencarts
+
+
+###Turn admin
+PATCH http://localhost:3000/users/turnadmin/265a3eac-cce9-432a-a718-7205252f8e58

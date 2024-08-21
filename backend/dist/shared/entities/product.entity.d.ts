@@ -1,4 +1,5 @@
 import { Category } from './category.entity';
+import { User } from './user.entity';
 export declare enum Size {
     SMALL = "small",
     MEDIUM = "medium",
@@ -16,4 +17,5 @@ export declare class Product {
     size: Size;
     image: string;
     category: Category;
+    createdBy: User;
 }

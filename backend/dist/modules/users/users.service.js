@@ -64,30 +64,38 @@ let UsersService = class UsersService {
         return this.repo.remove(user);
     }
     async createRandomUsers(count) {
-        function createRandomUser() {
-            return {
-                id: faker.string.uuid(),
-                email: faker.internet.email(),
-                password: faker.internet.password(),
-                username: faker.internet.userName(),
-            };
+        if (process.env.NODE_ENV === 'development') {
+            function createRandomUser() {
+                return {
+                    id: faker.string.uuid(),
+                    email: faker.internet.email(),
+                    password: faker.internet.password(),
+                    username: faker.internet.userName(),
+                };
+            }
+            const users = await Promise.all(Array.from({ length: count }, async () => {
+                const user = createRandomUser();
+                user.cart = await this.cartService.create();
+                return user;
+            }));
+            return await this.repo.save(users);
         }
-        const users = await Promise.all(Array.from({ length: count }, async () => {
-            const user = createRandomUser();
-            user.cart = await this.cartService.create();
-            console.log(user);
-            return user;
-        }));
-        return await this.repo.save(users);
     }
     async populateCarts() {
-        const users = await this.repo.find();
-        users.map(async (user) => {
-            user.cart === null
-                ? (user.cart = await this.cartService.create())
-                : (user.cart = user.cart);
-            await this.repo.save(user);
-        });
+        if (process.env.NODE_ENV === 'development') {
+            const users = await this.repo.find();
+            users.map(async (user) => {
+                user.cart === null
+                    ? (user.cart = await this.cartService.create())
+                    : (user.cart = user.cart);
+                await this.repo.save(user);
+            });
+        }
+    }
+    async turnAdmin(id) {
+        const user = await this.findOne(id);
+        user.is_admin = true;
+        return this.repo.save(user);
     }
 };
 exports.UsersService = UsersService;

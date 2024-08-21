@@ -7,19 +7,25 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateProductDto } from 'src/shared/dtos/product/create-product.dto';
 import { ProductsService } from './products.service';
 import { UpdateProductDto } from 'src/shared/dtos/product/update-product.dto';
 import { UpdateStockDto } from 'src/shared/dtos/product/update-stock.dto';
+import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
+import { User } from 'src/shared/entities/user.entity';
+import { AdminGuard } from 'src/shared/guards/admin.guard';
+import { AuthGuard } from 'src/shared/guards/auth.guard';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  createProduct(@Body() body: CreateProductDto) {
-    return this.productsService.create(body);
+  @UseGuards(AuthGuard, AdminGuard)
+  createProduct(@CurrentUser() admin: User, @Body() body: CreateProductDto) {
+    return this.productsService.create(admin, body);
   }
 
   @Get()

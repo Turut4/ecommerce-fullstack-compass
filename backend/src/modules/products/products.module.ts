@@ -7,6 +7,8 @@ import { SkuService } from './sku/sku.service';
 import { CategoriesService } from '../categories/categories.service';
 import { Category } from 'src/shared/entities/category.entity';
 import { CategoriesModule } from '../categories/categories.module';
+import { UsersModule } from '../users/users.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [ProductsController],
@@ -14,6 +16,7 @@ import { CategoriesModule } from '../categories/categories.module';
   imports: [
     TypeOrmModule.forFeature([Product]),
     forwardRef(() => CategoriesModule),
+    JwtModule
   ],
   exports: [ProductsService, SkuService],
 })

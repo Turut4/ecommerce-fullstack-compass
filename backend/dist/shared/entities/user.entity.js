@@ -52,6 +52,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => order_entity_1.Order, (orders) => orders.user),
     __metadata("design:type", Array)
 ], User.prototype, "orders", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "is_admin", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)('users')
 ], User);

@@ -9,4 +9,5 @@ export declare class User {
     updated_at: Date;
     cart: Cart;
     orders: Order[];
+    is_admin: boolean;
 }

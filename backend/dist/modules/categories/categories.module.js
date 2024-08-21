@@ -14,12 +14,17 @@ const category_entity_1 = require("../../shared/entities/category.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const product_entity_1 = require("../../shared/entities/product.entity");
 const products_module_1 = require("../products/products.module");
+const jwt_1 = require("@nestjs/jwt");
 let CategoriesModule = class CategoriesModule {
 };
 exports.CategoriesModule = CategoriesModule;
 exports.CategoriesModule = CategoriesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([category_entity_1.Category, product_entity_1.Product]), (0, common_1.forwardRef)(() => products_module_1.ProductsModule)],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([category_entity_1.Category, product_entity_1.Product]),
+            (0, common_1.forwardRef)(() => products_module_1.ProductsModule),
+            jwt_1.JwtModule,
+        ],
         providers: [categories_service_1.CategoriesService],
         controllers: [categories_controller_1.CategoriesController],
         exports: [categories_service_1.CategoriesService],

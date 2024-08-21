@@ -6,7 +6,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   OneToOne,
-  JoinTable,
   JoinColumn,
 } from 'typeorm';
 import { Cart } from './cart/cart.entity';
@@ -41,4 +40,6 @@ export class User {
 
   @OneToMany(() => Order, (orders) => orders.user)
   orders: Order[];
+
+  @Column({ default: false }) is_admin: boolean;
 }

@@ -16,6 +16,8 @@ exports.OrdersController = void 0;
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
 const create_order_dto_1 = require("../../shared/dtos/order/create-order.dto");
+const auth_guard_1 = require("../../shared/guards/auth.guard");
+const admin_guard_1 = require("../../shared/guards/admin.guard");
 let OrdersController = class OrdersController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -74,6 +76,7 @@ __decorate([
 ], OrdersController.prototype, "delete", null);
 exports.OrdersController = OrdersController = __decorate([
     (0, common_1.Controller)('orders'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
     __metadata("design:paramtypes", [orders_service_1.OrdersService])
 ], OrdersController);
 //# sourceMappingURL=orders.controller.js.map

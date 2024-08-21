@@ -6,16 +6,20 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateCategoryDto } from 'src/shared/dtos/category/create-category.dto';
 import { CategoriesService } from './categories.service';
 import { Category } from 'src/shared/entities/category.entity';
+import { AuthGuard } from 'src/shared/guards/auth.guard';
+import { AdminGuard } from 'src/shared/guards/admin.guard';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
+  @UseGuards(AuthGuard, AdminGuard)
   createCategory(@Body() body: CreateCategoryDto): Promise<Category> {
     return this.categoriesService.create(body);
   }
@@ -36,11 +40,13 @@ export class CategoriesController {
   }
 
   @Delete('/:id')
+  @UseGuards(AuthGuard, AdminGuard)
   removeCategory(@Param('id') id: string): Promise<Category> {
     return this.categoriesService.remove(id);
   }
 
   @Get('seed/:amount')
+  @UseGuards(AuthGuard, AdminGuard)
   seedCategories(@Param('amount') amount: number) {
     return this.categoriesService.genrateRandomCategories(amount);
   }

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = exports.Size = void 0;
 const typeorm_1 = require("typeorm");
 const category_entity_1 = require("./category.entity");
+const user_entity_1 = require("./user.entity");
 var Size;
 (function (Size) {
     Size["SMALL"] = "small";
@@ -65,6 +66,11 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => category_entity_1.Category, (category) => category.products, { eager: true }),
     __metadata("design:type", category_entity_1.Category)
 ], Product.prototype, "category", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => user_entity_1.User),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", user_entity_1.User)
+], Product.prototype, "createdBy", void 0);
 exports.Product = Product = __decorate([
     (0, typeorm_1.Entity)('products')
 ], Product);

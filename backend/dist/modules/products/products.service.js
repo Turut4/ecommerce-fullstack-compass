@@ -26,9 +26,10 @@ let ProductsService = class ProductsService {
         this.skuService = skuService;
         this.categoriesService = categoriesService;
     }
-    async create(createProductDto) {
+    async create(admin, createProductDto) {
         const product = this.repo.create(createProductDto);
         product.sku = this.skuService.generateSku(product);
+        product.createdBy = admin;
         const productExists = await this.repo.findOne({
             where: { sku: product.sku },
         });
@@ -74,24 +75,30 @@ let ProductsService = class ProductsService {
         return this.repo.remove(product);
     }
     async generateProduct() {
-        const category = await this.categoriesService.getRandomCategory();
-        const product = {
-            name: faker.commerce.productName(),
-            description: faker.commerce.productDescription(),
-            price: parseFloat(faker.commerce.price()),
-            color: faker.color.rgb(),
-            stock: faker.number.int({ min: 0, max: 100 }),
-            image: faker.image.url(),
-            size: faker.helpers.arrayElement(['small', 'medium', 'large']),
-            percentageDiscount: faker.number.int({ min: 0, max: 40 }),
-            category,
-        };
-        product.sku = this.skuService.generateSku(product);
-        return product;
+        if (process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test') {
+            const category = await this.categoriesService.getRandomCategory();
+            const product = {
+                name: faker.commerce.productName(),
+                description: faker.commerce.productDescription(),
+                price: parseFloat(faker.commerce.price()),
+                color: faker.color.rgb(),
+                stock: faker.number.int({ min: 0, max: 100 }),
+                image: faker.image.url(),
+                size: faker.helpers.arrayElement(['small', 'medium', 'large']),
+                percentageDiscount: faker.number.int({ min: 0, max: 40 }),
+                category,
+            };
+            product.sku = this.skuService.generateSku(product);
+            return product;
+        }
     }
     async generateRandomProducts(count) {
-        const products = await Promise.all(Array.from({ length: count }, async () => await this.generateProduct()));
-        return await this.repo.save(products);
+        if (process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test') {
+            const products = await Promise.all(Array.from({ length: count }, async () => await this.generateProduct()));
+            return await this.repo.save(products);
+        }
     }
 };
 exports.ProductsService = ProductsService;

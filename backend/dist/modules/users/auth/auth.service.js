@@ -13,10 +13,12 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users.service");
 const password_service_1 = require("./password/password.service");
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
-    constructor(userService, passwordService) {
+    constructor(userService, passwordService, jwtService) {
         this.userService = userService;
         this.passwordService = passwordService;
+        this.jwtService = jwtService;
     }
     async signup(createUserDto) {
         const { email, password, username } = createUserDto;
@@ -24,7 +26,7 @@ let AuthService = class AuthService {
         const hashedPassword = await this.passwordService.hashPassword(password);
         if (users.length)
             throw new common_1.BadRequestException('Email already in use');
-        const user = this.userService.create(email, hashedPassword, username);
+        const user = await this.userService.create(email, hashedPassword, username);
         return user;
     }
     async signin(email, password) {
@@ -34,13 +36,18 @@ let AuthService = class AuthService {
         const isPasswordValid = await this.passwordService.verifyPassword(password, user.password);
         if (!isPasswordValid)
             throw new common_1.BadRequestException('Password not valid');
-        return user;
+        const { password: _, ...payload } = user;
+        return this.jwtService.sign(payload);
+    }
+    async logout() {
+        this.jwtService.sign({ sub: '' }, { expiresIn: '1s' });
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_service_1.UsersService,
-        password_service_1.PasswordService])
+        password_service_1.PasswordService,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

@@ -14,4 +14,7 @@ export class UserDto {
   @Expose()
   @Transform(({ obj }) => (obj.cart ? obj.cart.id : null))
   cart: Cart;
+
+  @Expose()
+  is_admin: boolean;
 }

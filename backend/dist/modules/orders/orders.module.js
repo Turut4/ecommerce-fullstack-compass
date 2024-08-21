@@ -17,6 +17,7 @@ const users_module_1 = require("../users/users.module");
 const products_module_1 = require("../products/products.module");
 const categories_module_1 = require("../categories/categories.module");
 const carts_module_1 = require("../carts/carts.module");
+const jwt_1 = require("@nestjs/jwt");
 let OrdersModule = class OrdersModule {
 };
 exports.OrdersModule = OrdersModule;
@@ -30,6 +31,7 @@ exports.OrdersModule = OrdersModule = __decorate([
             products_module_1.ProductsModule,
             categories_module_1.CategoriesModule,
             carts_module_1.CartsModule,
+            jwt_1.JwtModule,
         ],
         exports: [orders_service_1.OrdersService],
     })

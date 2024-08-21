@@ -2,12 +2,16 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/modules/users/users.service';
 import { PasswordService } from './password/password.service';
 import { CreateUserDto } from 'src/shared/dtos/user/create-user.dto';
+import { User } from 'src/shared/entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly passwordService: PasswordService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async signup(createUserDto: CreateUserDto) {
@@ -17,8 +21,7 @@ export class AuthService {
 
     if (users.length) throw new BadRequestException('Email already in use');
 
-    const user = this.userService.create(email, hashedPassword, username);
-
+    const user = await this.userService.create(email, hashedPassword, username);
     return user;
   }
 
@@ -33,6 +36,11 @@ export class AuthService {
 
     if (!isPasswordValid) throw new BadRequestException('Password not valid');
 
-    return user;
+    const { password: _, ...payload } = user;
+    return this.jwtService.sign(payload);
+  }
+
+  async logout() {
+    this.jwtService.sign({ sub: '' }, { expiresIn: '1s' });
   }
 }

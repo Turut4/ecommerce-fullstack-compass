@@ -9,14 +9,17 @@ export declare class UsersController {
     private readonly authService;
     constructor(usersService: UsersService, authService: AuthService);
     createUser(body: CreateUserDto, session: any): Promise<User>;
-    signin(body: LoginUserDto, session: any): Promise<User>;
-    signout(session: any): void;
+    signUp(body: CreateUserDto): Promise<User>;
+    signIn(body: LoginUserDto): Promise<any>;
+    logOut(res: Response): void;
     whoAmI(user: User): Promise<User>;
     updateUser(id: string, body: UpdateUserDto): Promise<User>;
     updateMe(body: UpdateUserDto, user: User): Promise<User>;
     findUsers(email: string): Promise<User[]>;
     findUser(id: string): Promise<User>;
+    deleteMe(user: User): Promise<User>;
     deleteUser(id: string): Promise<User>;
     seedUsers(count: string): Promise<User[]>;
     populateCarts(): Promise<void>;
+    turnAdmin(id: string): Promise<User>;
 }

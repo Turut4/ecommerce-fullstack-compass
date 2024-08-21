@@ -16,6 +16,8 @@ exports.CategoriesController = void 0;
 const common_1 = require("@nestjs/common");
 const create_category_dto_1 = require("../../shared/dtos/category/create-category.dto");
 const categories_service_1 = require("./categories.service");
+const auth_guard_1 = require("../../shared/guards/auth.guard");
+const admin_guard_1 = require("../../shared/guards/admin.guard");
 let CategoriesController = class CategoriesController {
     constructor(categoriesService) {
         this.categoriesService = categoriesService;
@@ -42,6 +44,7 @@ let CategoriesController = class CategoriesController {
 exports.CategoriesController = CategoriesController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_category_dto_1.CreateCategoryDto]),
@@ -70,6 +73,7 @@ __decorate([
 ], CategoriesController.prototype, "updateCategory", null);
 __decorate([
     (0, common_1.Delete)('/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -77,6 +81,7 @@ __decorate([
 ], CategoriesController.prototype, "removeCategory", null);
 __decorate([
     (0, common_1.Get)('seed/:amount'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
     __param(0, (0, common_1.Param)('amount')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),

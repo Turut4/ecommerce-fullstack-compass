@@ -32,4 +32,8 @@ __decorate([
     (0, class_transformer_1.Transform)(({ obj }) => (obj.cart ? obj.cart.id : null)),
     __metadata("design:type", cart_entity_1.Cart)
 ], UserDto.prototype, "cart", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    __metadata("design:type", Boolean)
+], UserDto.prototype, "is_admin", void 0);
 //# sourceMappingURL=user.dto.js.map

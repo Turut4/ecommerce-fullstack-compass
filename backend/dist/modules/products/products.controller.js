@@ -18,12 +18,16 @@ const create_product_dto_1 = require("../../shared/dtos/product/create-product.d
 const products_service_1 = require("./products.service");
 const update_product_dto_1 = require("../../shared/dtos/product/update-product.dto");
 const update_stock_dto_1 = require("../../shared/dtos/product/update-stock.dto");
+const current_user_decorator_1 = require("../../shared/decorators/current-user.decorator");
+const user_entity_1 = require("../../shared/entities/user.entity");
+const admin_guard_1 = require("../../shared/guards/admin.guard");
+const auth_guard_1 = require("../../shared/guards/auth.guard");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
     }
-    createProduct(body) {
-        return this.productsService.create(body);
+    createProduct(admin, body) {
+        return this.productsService.create(admin, body);
     }
     findAllProducts() {
         return this.productsService.findAll();
@@ -50,9 +54,11 @@ let ProductsController = class ProductsController {
 exports.ProductsController = ProductsController;
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
+    __metadata("design:paramtypes", [user_entity_1.User, create_product_dto_1.CreateProductDto]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "createProduct", null);
 __decorate([

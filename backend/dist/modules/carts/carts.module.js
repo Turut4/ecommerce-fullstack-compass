@@ -15,6 +15,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const products_module_1 = require("../products/products.module");
 const categories_module_1 = require("../categories/categories.module");
 const cart_item_entity_1 = require("../../shared/entities/cart/cart-item.entity");
+const auth_module_1 = require("../users/auth/auth.module");
 let CartsModule = class CartsModule {
 };
 exports.CartsModule = CartsModule;
@@ -24,6 +25,7 @@ exports.CartsModule = CartsModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([cart_entity_1.Cart, cart_item_entity_1.CartItem]),
             products_module_1.ProductsModule,
             categories_module_1.CategoriesModule,
+            auth_module_1.AuthModule,
         ],
         providers: [carts_service_1.CartsService],
         controllers: [carts_controller_1.CartsController],

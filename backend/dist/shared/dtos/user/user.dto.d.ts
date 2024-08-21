@@ -4,4 +4,5 @@ export declare class UserDto {
     username: string;
     email: string;
     cart: Cart;
+    is_admin: boolean;
 }
