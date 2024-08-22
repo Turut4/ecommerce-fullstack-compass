@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
@@ -11,7 +11,10 @@ import { CategoriesController } from './modules/categories/categories.controller
 import { CartsController } from './modules/carts/carts.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './modules/users/auth/auth.module';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import * as cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -48,4 +51,23 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
     CartsController,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    const corsOptions = {
+      origin: 'http://localhost:5173',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      allowedHeaders: 'Content-Type, Authorization',
+    };
+
+    consumer
+      .apply(
+        cors(corsOptions),
+        helmet(),
+        rateLimit({
+          windowMs: 10 * 60 * 1000,
+          max: 100,
+        }),
+      )
+      .forRoutes('*');
+  }
+}

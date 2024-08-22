@@ -103,7 +103,7 @@ __decorate([
 ], UsersController.prototype, "signIn", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)('auth/logOut'),
+    (0, common_1.Get)('auth/logout'),
     __param(0, (0, common_1.Response)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

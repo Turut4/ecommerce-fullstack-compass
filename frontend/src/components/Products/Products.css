@@ -1,0 +1,51 @@
+:root {
+  --four--cards: 301px 301px 301px 301px;
+  --three--cards: 301px 301px 301px;
+  --two--cards: 301px 301px;
+  --one--card: 301px;
+  --bg-color: #f4f5f7;
+}
+
+.products-list {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: var(--four--cards);
+  gap: 4rem;
+  justify-content: center;
+}
+
+.products-list > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--bg-color);
+  height: 416px;
+}
+
+.products-list img {
+  height: 285px;
+  width: 301px;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+@media (max-width: 1400px) {
+  .products-list {
+    grid-template-columns: var(--three--cards);
+  }
+}
+
+@media (max-width: 1000px) {
+  .products-list {
+    grid-template-columns: var(--two--cards);
+  }
+}
+
+@media (max-width: 650px) {
+  .products-list {
+    grid-template-columns: var(--one--card);
+  }
+}

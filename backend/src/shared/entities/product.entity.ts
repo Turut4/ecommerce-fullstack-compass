@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToOne,
   JoinColumn,
+  CreateDateColumn,
 } from 'typeorm';
 import { Category } from './category.entity';
 import { User } from './user.entity';
@@ -53,4 +54,7 @@ export class Product {
   @OneToOne(() => User)
   @JoinColumn()
   createdBy: User;
+
+  @CreateDateColumn({ default: Date.now() })
+  createdAt: Date;
 }

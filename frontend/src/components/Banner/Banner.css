@@ -1,0 +1,23 @@
+.banner {
+  background-image: url('./../../assets/shopeCover.png');
+  height: 20rem;
+  width: 100vw;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.banner h2 {
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.banner h3 {
+  font-size: 1rem;
+  align-items: center;
+  word-spacing: 1rem;
+}
