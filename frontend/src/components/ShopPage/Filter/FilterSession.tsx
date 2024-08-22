@@ -1,7 +1,7 @@
 import { BsFilter } from 'react-icons/bs';
-import { Category } from '../../../../hooks/useCategory';
+import { Category } from '../../../hooks/useCategory';
 import { useState } from 'react';
-import CategoriesFilter from './CategoriesFilter';
+import SetCategory from './CategoriesFilter';
 
 interface FilterSessionProps {
   categories: Category[];
@@ -21,7 +21,7 @@ export default function FilterSession({
         <span>
           <BsFilter onClick={() => setIsOpen(!isOpen)} /> Filter
           {isOpen && (
-            <CategoriesFilter
+            <SetCategory
               onSetCategory={onSetCategory}
               categories={categories}
             />

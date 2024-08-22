@@ -1,22 +1,26 @@
 import './ProductsList.css';
 import { Product } from './Product';
 import { useProducts } from '../../../hooks/useProduct';
-import FilterSession from './Filter/FilterSession';
+import FilterSession from '../Filter/FilterSession';
 import useCategories from '../../../hooks/useCategory';
 import { useState } from 'react';
+import WarningSession from '../Filter/WarningSession';
 
 export default function ProductsList() {
   const [category, setCategory] = useState('');
-  const { data: categories } = useCategories();
-  const {
-    data: products,
-    isLoading: isLoadingProducts,
-    error: productsError,
-  } = useProducts({
+
+  const { data: categories, isLoading: isLoadingCategories } = useCategories();
+  const { data: products, isLoading: isLoadingProducts } = useProducts({
     category,
   });
 
-  if (!categories) return <p>Some thing went wrong...</p>;
+  if (isLoadingCategories) {
+    return <WarningSession message={'Loading categories...'} />;
+  }
+
+  if (!categories) {
+    return <WarningSession message={`No categories found`} />;
+  }
 
   if (isLoadingProducts) {
     return (
@@ -27,9 +31,6 @@ export default function ProductsList() {
       />
     );
   }
-
-  if (productsError)
-    return <p>Error loading products: {productsError.message}</p>;
 
   if (!products) {
     return (
