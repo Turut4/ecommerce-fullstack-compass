@@ -57,17 +57,9 @@ export class AppModule implements NestModule {
       origin: 'http://localhost:5173',
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       allowedHeaders: 'Content-Type, Authorization',
+      Credential: true,
     };
 
-    consumer
-      .apply(
-        cors(corsOptions),
-        helmet(),
-        rateLimit({
-          windowMs: 10 * 60 * 1000,
-          max: 100,
-        }),
-      )
-      .forRoutes('*');
+    consumer.apply(cors(corsOptions), helmet()).forRoutes('*');
   }
 }

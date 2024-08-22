@@ -55,6 +55,6 @@ export class Product {
   @JoinColumn()
   createdBy: User;
 
-  @CreateDateColumn({ default: Date.now() })
+  @CreateDateColumn()
   createdAt: Date;
 }

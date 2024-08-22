@@ -29,8 +29,13 @@ export class ProductsController {
   }
 
   @Get()
-  findAllProducts() {
-    return this.productsService.findAll();
+  findAllProducts(
+    @Query('category') category?: string,
+    @Query('price_min') priceMin?: number,
+    @Query('price_max') priceMax?: number,
+    @Query('sort') sort?: 'lower' | 'higher' | 'a-z' | 'z-a',
+  ) {
+    return this.productsService.findAll({ category, priceMin, priceMax, sort });
   }
 
   @Get()

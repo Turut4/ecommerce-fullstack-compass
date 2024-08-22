@@ -6,7 +6,6 @@ interface ProductProps extends ComponentProps<'div'> {
   price: number;
   discount?: number;
   image: string;
-  
 }
 
 export function Product({
@@ -16,7 +15,6 @@ export function Product({
   discount,
   image,
 }: ProductProps) {
-  console.log(discount);
   return (
     <div style={{ width: '301px' }}>
       <img src={image} />

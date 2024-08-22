@@ -14,8 +14,30 @@ import { SkuService } from './sku/sku.service';
 import { UpdateStockDto } from 'src/shared/dtos/product/update-stock.dto';
 import { CategoriesService } from '../categories/categories.service';
 import { User } from 'src/shared/entities/user.entity';
+import { filter } from 'rxjs';
 
 const { faker } = require('@faker-js/faker');
+
+interface ProductFilter {
+  category?: string;
+  priceMin?: number;
+  priceMax?: number;
+  sort?: 'lower' | 'higher' | 'a-z' | 'z-a';
+}
+
+type Order = 'ASC' | 'DESC';
+
+interface OrderByOption {
+  column: string;
+  order: Order;
+}
+
+interface OrderBy {
+  lower: OrderByOption;
+  higher: OrderByOption;
+  'a-z': OrderByOption;
+  'z-a': OrderByOption;
+}
 
 @Injectable()
 export class ProductsService {
@@ -49,8 +71,41 @@ export class ProductsService {
     return await this.repo.save(product);
   }
 
-  async findAll(): Promise<Product[]> {
-    return await this.repo.find();
+  async findAll(filters: ProductFilter): Promise<Product[]> {
+    const query = this.repo.createQueryBuilder('product');
+
+    const filterBy = {
+      category: filters.category ? 'products.category = :category' : undefined,
+      priceMin:
+        filters.priceMin !== undefined
+          ? 'product.price >= :priceMin'
+          : undefined,
+      priceMax:
+        filters.priceMax !== undefined
+          ? 'product.price <= :priceMax'
+          : undefined,
+    };
+
+    Object.keys(filterBy).forEach((key) => {
+      if (filterBy[key]) {
+        query.andWhere(filterBy[key], {
+          [key]: filters[key],
+        });
+      }
+    });
+
+    const orderByMap: OrderBy = {
+      lower: { column: 'product.price', order: 'ASC' },
+      higher: { column: 'product.price', order: 'DESC' },
+      'a-z': { column: 'product.name', order: 'ASC' },
+      'z-a': { column: 'product.name', order: 'DESC' },
+    };
+
+    const orderBy = orderByMap[filters.sort];
+
+    if (orderBy) query.orderBy(orderBy.column, orderBy.order);
+
+    return await query.getMany();
   }
 
   async findManyByName(name: string): Promise<Product[]> {
