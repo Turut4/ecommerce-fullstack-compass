@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
-interface Filters {
+export interface Filters {
   category?: string;
   minPrice?: string;
   rating?: string;
-  sort?: 'lower' | 'higher' | 'a-z' | 'z-a';
+  sort?: string;
 }
 
 export interface Product {
@@ -21,11 +21,24 @@ export interface Product {
   createdAt: string;
 }
 
-async function fetchProducts(filters: Filters = {}): Promise<Product[]> {
+interface ApiResponse {
+  products: Product[];
+  total: number;
+  page: number;
+  currentPage: number;
+}
+
+async function fetchProducts(
+  page: number,
+  pageSize: number,
+  filters: Filters = {},
+): Promise<ApiResponse> {
   const query = new URLSearchParams(
     filters as Record<string, string>,
   ).toString();
-  const response = await fetch(`http://localhost:3000/products?${query}`);
+  const response = await fetch(
+    `http://localhost:3000/products?page=${page}&pageSize=${pageSize}&${query}`,
+  );
 
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -33,9 +46,13 @@ async function fetchProducts(filters: Filters = {}): Promise<Product[]> {
   return response.json();
 }
 
-export function useProducts(filters: Filters = {}) {
-  return useQuery<Product[]>({
-    queryKey: ['products', filters],
-    queryFn: () => fetchProducts(filters),
+export function useProducts(
+  page: number,
+  pageSize: number,
+  filters: Filters = {},
+) {
+  return useQuery<ApiResponse>({
+    queryKey: ['products', filters, page, pageSize],
+    queryFn: () => fetchProducts(page, pageSize, filters),
   });
 }

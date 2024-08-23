@@ -39,6 +39,13 @@ interface OrderBy {
   'z-a': OrderByOption;
 }
 
+export interface ProductResponse {
+  products: Product[];
+  total: number;
+  currentPage: number;
+  totalPages: number;
+}
+
 @Injectable()
 export class ProductsService {
   constructor(
@@ -71,7 +78,11 @@ export class ProductsService {
     return await this.repo.save(product);
   }
 
-  async findAll(filters: ProductFilter): Promise<Product[]> {
+  async findAll(
+    filters: ProductFilter,
+    page: number,
+    pageSize: number,
+  ): Promise<ProductResponse> {
     const query = this.repo.createQueryBuilder('product');
 
     const filterBy = {
@@ -105,7 +116,17 @@ export class ProductsService {
 
     if (orderBy) query.orderBy(orderBy.column, orderBy.order);
 
-    return await query.getMany();
+    const [products, total] = await query
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .getManyAndCount();
+
+    return {
+      products,
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / pageSize),
+    };
   }
 
   async findManyByName(name: string): Promise<Product[]> {

@@ -1,0 +1,72 @@
+.filter-session {
+  background-color: #f9f1e7;
+  display: flex;
+  width: 100%;
+  height: 6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter {
+  display: flex;
+  font-size: 20px;
+  gap: 2rem;
+  margin-left: 2rem;
+  line-height: 2rem;
+}
+
+.filter-icon {
+  font-size: 30px;
+  margin-bottom: -8px;
+}
+
+.filter span {
+  border-right: solid 2px #9f9f9f;
+  padding-right: 20px;
+}
+
+.filter p {
+  font-size: 20px;
+}
+
+.message {
+  font-size: 16px;
+}
+
+.dropdown {
+  background-color: #ffffff;
+  margin: 0 1.8rem;
+  height: 3rem;
+  text-align: center;
+  line-height: 3rem;
+  width: 12rem;
+}
+
+.p-dropdown-panel {
+  background-color: #ffffff;
+  display: flex;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.p-dropdown-item {
+  padding: 5px 0;
+}
+
+.sort-by {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.show input {
+  height: 3rem;
+  aspect-ratio: 1;
+  border: none;
+  margin: 1.8rem;
+  justify-content: center;
+  text-align: center;
+  font-size: 20px;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

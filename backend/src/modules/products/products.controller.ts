@@ -17,6 +17,7 @@ import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { User } from 'src/shared/entities/user.entity';
 import { AdminGuard } from 'src/shared/guards/admin.guard';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
+import { ProductResponse } from './products.service';
 
 @Controller('products')
 export class ProductsController {
@@ -30,12 +31,23 @@ export class ProductsController {
 
   @Get()
   findAllProducts(
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
     @Query('category') category?: string,
-    @Query('price_min') priceMin?: number,
-    @Query('price_max') priceMax?: number,
+    @Query('priceMin') priceMin?: number,
+    @Query('priceMax') priceMax?: number,
     @Query('sort') sort?: 'lower' | 'higher' | 'a-z' | 'z-a',
-  ) {
-    return this.productsService.findAll({ category, priceMin, priceMax, sort });
+  ): Promise<ProductResponse> {
+    return this.productsService.findAll(
+      {
+        category,
+        priceMin,
+        priceMax,
+        sort,
+      },
+      page,
+      pageSize,
+    );
   }
 
   @Get()
