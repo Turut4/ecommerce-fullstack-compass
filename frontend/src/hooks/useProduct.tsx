@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 
 export interface Filters {
   category?: string;
-  minPrice?: string;
+  priceMin?: number;
+  priceMax?: number;
   rating?: string;
   sort?: string;
   search?: string;

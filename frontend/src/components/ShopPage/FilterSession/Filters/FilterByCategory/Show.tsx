@@ -9,10 +9,14 @@ export default function Show({ onSetPageSize, pageSize }: ShowProps) {
       <label>Show</label>
       <input
         type="number"
-        max={16}
+        max={32}
         min={1}
         value={pageSize}
-        onChange={(e) => onSetPageSize(parseInt(e.target.value))}
+        onChange={(e) =>
+          e.target.value != ''
+            ? onSetPageSize(parseInt(e.target.value))
+            : onSetPageSize(1)
+        }
       />
     </div>
   );

@@ -3,8 +3,8 @@ import { Product } from './Product';
 import { useProducts } from '../../../hooks/useProduct';
 import useCategories from '../../../hooks/useCategory';
 import { useEffect, useState } from 'react';
-import WarningSession from '../FilterSession/WarningSession';
 import FilterSession from '../FilterSession/FilterSession';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 interface ProductsListProps {
   search: string;
@@ -15,6 +15,16 @@ export default function ProductsList({ search }: ProductsListProps) {
   const [sortBy, setSortBy] = useState('');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const [priceMin, setPriceMin] = useState(0);
+  const [priceMax, setPriceMax] = useState(100000);
+
+  if (priceMax < priceMin) {
+    setPriceMax(priceMin);
+  }
+
+  if (priceMin < 0) {
+    setPriceMin(0);
+  }
 
   if (sortBy === 'Default') {
     setSortBy('');
@@ -30,18 +40,14 @@ export default function ProductsList({ search }: ProductsListProps) {
 
   useEffect(() => {
     if (pageSize < 1) {
-      setPageSize(1);
-    } else if (pageSize > 16) {
-      setPageSize(16);
+      setPageSize(0);
+    } else if (pageSize > 32) {
+      setPageSize(32);
     }
   }, [pageSize]);
 
-  if (pageSize > 16) {
-    setPageSize(16);
-  }
 
-  const { data: categoriesData, isLoading: isLoadingCategories } =
-    useCategories();
+  const { data: categoriesData } = useCategories();
   const { data: productsData, isLoading: isLoadingProducts } = useProducts(
     page,
     pageSize,
@@ -49,28 +55,19 @@ export default function ProductsList({ search }: ProductsListProps) {
       category: selectedCategory,
       sort: sortBy.toLowerCase(),
       search,
+      priceMin,
+      priceMax,
     },
   );
 
-  if (isLoadingCategories) {
-    return <WarningSession message={'Loading categories...'} />;
-  }
-
-  if (!categoriesData) {
-    return <WarningSession message={`No categories found`} />;
-  }
-
   if (isLoadingProducts) {
     return (
-      <FilterSession
-        sortBy={sortBy}
-        onSetSortBy={setSortBy}
-        categories={categoriesData}
-        selectedCategory={selectedCategory}
-        onSetCategory={setCategory}
-        message={'Loading products...'}
-        onSetPageSize={setPageSize}
-        pageSize={pageSize}
+      <ProgressSpinner
+        style={{
+          alignSelf: 'center',
+          justifyContent: 'center',
+          width: '100vw',
+        }}
       />
     );
   }
@@ -86,6 +83,10 @@ export default function ProductsList({ search }: ProductsListProps) {
         message={`No products found`}
         onSetPageSize={setPageSize}
         pageSize={pageSize}
+        onSetPriceMin={setPriceMin}
+        priceMin={priceMin}
+        onSetPriceMax={setPriceMax}
+        priceMax={priceMax}
       />
     );
   }
@@ -101,6 +102,10 @@ export default function ProductsList({ search }: ProductsListProps) {
         message={`Showing 1-16 of ${productsData.total} results`}
         onSetPageSize={setPageSize}
         pageSize={pageSize}
+        onSetPriceMin={setPriceMin}
+        priceMin={priceMin}
+        onSetPriceMax={setPriceMax}
+        priceMax={priceMax}
       />
       <div className="products-list">
         {!productsData ? (

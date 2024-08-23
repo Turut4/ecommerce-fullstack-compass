@@ -6,9 +6,13 @@ interface FilterByCategoryProps {
   isOpen: boolean;
   onSetIsOpen: (isOpen: boolean) => void;
   onSetCategory: (category: string) => void;
-  categories: Category[];
+  categories: Category[] | undefined;
   selectedCategory: string;
   message: string;
+  onSetPriceMin: (priceMin: number) => void;
+  onSetPriceMax: (priceMax: number) => void;
+  priceMin: number;
+  priceMax: number;
 }
 
 export default function FilterByCategory({
@@ -18,6 +22,10 @@ export default function FilterByCategory({
   onSetCategory,
   categories,
   message,
+  onSetPriceMin,
+  onSetPriceMax,
+  priceMin,
+  priceMax,
 }: FilterByCategoryProps) {
   return (
     <div className="filter">
@@ -29,6 +37,10 @@ export default function FilterByCategory({
         Filter
         {isOpen && (
           <SetCategory
+            onSetPriceMin={onSetPriceMin}
+            onSetPriceMax={onSetPriceMax}
+            priceMin={priceMin}
+            priceMax={priceMax}
             onSetCategory={onSetCategory}
             categories={categories}
             selectedCategory={selectedCategory}
