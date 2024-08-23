@@ -23,6 +23,7 @@ interface ProductFilter {
   priceMin?: number;
   priceMax?: number;
   sort?: 'lower' | 'higher' | 'a-z' | 'z-a';
+  search?: string;
 }
 
 type Order = 'ASC' | 'DESC';
@@ -84,9 +85,10 @@ export class ProductsService {
     pageSize: number,
   ): Promise<ProductResponse> {
     const query = this.repo.createQueryBuilder('product');
+    query.leftJoinAndSelect('product.category', 'category');
 
     const filterBy = {
-      category: filters.category ? 'products.category = :category' : undefined,
+      category: filters.category ? 'category.name = :category' : undefined,
       priceMin:
         filters.priceMin !== undefined
           ? 'product.price >= :priceMin'
@@ -96,6 +98,12 @@ export class ProductsService {
           ? 'product.price <= :priceMax'
           : undefined,
     };
+
+    if (filters.search) {
+      query.andWhere('product.name LIKE :name', {
+        name: `%${filters.search}%`,
+      });
+    }
 
     Object.keys(filterBy).forEach((key) => {
       if (filterBy[key]) {

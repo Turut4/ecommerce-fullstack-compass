@@ -5,6 +5,7 @@ export interface Filters {
   minPrice?: string;
   rating?: string;
   sort?: string;
+  search?: string;
 }
 
 export interface Product {

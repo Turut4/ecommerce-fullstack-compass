@@ -32,7 +32,7 @@ header img {
 }
 
 header h1 {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 35px;
   margin-left: 0.3rem;
   font-weight: 700;
@@ -71,13 +71,13 @@ header h1 {
 .search-bar input {
   border: none;
   font-size: 1rem;
-  width: 15rem;
+  width: 16rem;
 }
 
-.search-bar input[type="submit"] {
+.search-bar input[type='submit'] {
   cursor: pointer;
   font-weight: 500;
-  width: 3rem;
+  width: 4rem;
   background-color: #fff;
 }
 

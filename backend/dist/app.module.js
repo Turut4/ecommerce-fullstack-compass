@@ -22,20 +22,15 @@ const config_1 = require("@nestjs/config");
 const auth_module_1 = require("./modules/users/auth/auth.module");
 const cors = require("cors");
 const helmet_1 = require("helmet");
-const express_rate_limit_1 = require("express-rate-limit");
 let AppModule = class AppModule {
     configure(consumer) {
         const corsOptions = {
             origin: 'http://localhost:5173',
             methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
             allowedHeaders: 'Content-Type, Authorization',
+            Credential: true,
         };
-        consumer
-            .apply(cors(corsOptions), (0, helmet_1.default)(), (0, express_rate_limit_1.default)({
-            windowMs: 10 * 60 * 1000,
-            max: 100,
-        }))
-            .forRoutes('*');
+        consumer.apply(cors(corsOptions), (0, helmet_1.default)()).forRoutes('*');
     }
 };
 exports.AppModule = AppModule;

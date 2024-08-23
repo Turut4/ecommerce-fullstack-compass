@@ -29,8 +29,14 @@ let ProductsController = class ProductsController {
     createProduct(admin, body) {
         return this.productsService.create(admin, body);
     }
-    findAllProducts() {
-        return this.productsService.findAll();
+    findAllProducts(page, pageSize, category, priceMin, priceMax, sort, search) {
+        return this.productsService.findAll({
+            category,
+            priceMin,
+            priceMax,
+            sort,
+            search,
+        }, page, pageSize);
     }
     findProductsByName(name) {
         return this.productsService.findManyByName(name);
@@ -63,9 +69,16 @@ __decorate([
 ], ProductsController.prototype, "createProduct", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('pageSize')),
+    __param(2, (0, common_1.Query)('category')),
+    __param(3, (0, common_1.Query)('priceMin')),
+    __param(4, (0, common_1.Query)('priceMax')),
+    __param(5, (0, common_1.Query)('sort')),
+    __param(6, (0, common_1.Query)('search')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Number, Number, String, Number, Number, String, String]),
+    __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "findAllProducts", null);
 __decorate([
     (0, common_1.Get)(),

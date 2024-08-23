@@ -14,7 +14,7 @@ Content-Type: application/json
 }
 
 ###Find all products || product by name
-GET http://localhost:3000/products?
+GET http://localhost:3000/products?page=4&pageSize=10
 
 ### Find product by id
 GET http://localhost:3000/products/MOTR03YE

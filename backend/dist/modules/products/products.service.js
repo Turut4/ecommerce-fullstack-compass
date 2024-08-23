@@ -39,8 +39,49 @@ let ProductsService = class ProductsService {
         product.category = await this.categoriesService.findOne(createProductDto.categoryId);
         return await this.repo.save(product);
     }
-    async findAll() {
-        return await this.repo.find();
+    async findAll(filters, page, pageSize) {
+        const query = this.repo.createQueryBuilder('product');
+        query.leftJoinAndSelect('product.category', 'category');
+        const filterBy = {
+            category: filters.category ? 'category.name = :category' : undefined,
+            priceMin: filters.priceMin !== undefined
+                ? 'product.price >= :priceMin'
+                : undefined,
+            priceMax: filters.priceMax !== undefined
+                ? 'product.price <= :priceMax'
+                : undefined,
+        };
+        if (filters.search) {
+            query.andWhere('product.name LIKE :name', {
+                name: `%${filters.search}%`,
+            });
+        }
+        Object.keys(filterBy).forEach((key) => {
+            if (filterBy[key]) {
+                query.andWhere(filterBy[key], {
+                    [key]: filters[key],
+                });
+            }
+        });
+        const orderByMap = {
+            lower: { column: 'product.price', order: 'ASC' },
+            higher: { column: 'product.price', order: 'DESC' },
+            'a-z': { column: 'product.name', order: 'ASC' },
+            'z-a': { column: 'product.name', order: 'DESC' },
+        };
+        const orderBy = orderByMap[filters.sort];
+        if (orderBy)
+            query.orderBy(orderBy.column, orderBy.order);
+        const [products, total] = await query
+            .skip((page - 1) * pageSize)
+            .take(pageSize)
+            .getManyAndCount();
+        return {
+            products,
+            total,
+            currentPage: page,
+            totalPages: Math.ceil(total / pageSize),
+        };
     }
     async findManyByName(name) {
         return await this.repo

@@ -12,18 +12,22 @@ export default function SetCategory({
   selectedCategory,
   categories,
 }: SetCategoryProps) {
+  const category = categories.map((category) => category.name);
+  const options = ['All', ...category];
+
   return (
-    <div>
+    <div className="category-filter">
       <Dropdown
-        options={categories.map((category) => category.name)}
+        options={options}
         value={selectedCategory}
         onChange={(e) => onSetCategory(e.value)}
         placeholder="Select a Category"
+        className="dropdown-category"
       />
       <label>price: </label>
-      <input type="text" />
+      <input type="text" placeholder="Min" />
       -
-      <input type="text" />
+      <input type="text" placeholder="Max" />
     </div>
   );
 }

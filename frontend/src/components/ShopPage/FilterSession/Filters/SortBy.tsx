@@ -6,7 +6,8 @@ interface SortByProps {
 }
 
 export default function SortBy({ onSetSortBy, sortBy }: SortByProps) {
-  const options = ['A-Z', 'Z-A', 'Higher', 'Lower'];
+  const sortByOptions = ['A-Z', 'Z-A', 'Higher', 'Lower'];
+  const options = ['Default', ...sortByOptions];
   return (
     <div className="show">
       <label>Sort By</label>

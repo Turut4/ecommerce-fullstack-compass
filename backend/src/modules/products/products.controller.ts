@@ -37,6 +37,7 @@ export class ProductsController {
     @Query('priceMin') priceMin?: number,
     @Query('priceMax') priceMax?: number,
     @Query('sort') sort?: 'lower' | 'higher' | 'a-z' | 'z-a',
+    @Query('search') search?: string,
   ): Promise<ProductResponse> {
     return this.productsService.findAll(
       {
@@ -44,6 +45,7 @@ export class ProductsController {
         priceMin,
         priceMax,
         sort,
+        search,
       },
       page,
       pageSize,

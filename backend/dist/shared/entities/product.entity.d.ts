@@ -18,4 +18,5 @@ export declare class Product {
     image: string;
     category: Category;
     createdBy: User;
+    createdAt: Date;
 }

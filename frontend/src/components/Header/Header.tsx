@@ -1,44 +1,19 @@
-import { BsHeart, BsPersonExclamation, BsCart } from 'react-icons/bs';
-import Search from './Search';
 import './Header.css';
+import { Logo } from './Logo';
+import { NavLinks } from './NavLinks';
+import { NavButtons } from './NavButtons';
 
-export default function Header() {
+interface HeaderProps {
+  search: string;
+  onSetSearch: (search: string) => void;
+}
+
+export default function Header({ search, onSetSearch }: HeaderProps) {
   return (
     <header>
       <Logo />
       <NavLinks />
-      <NavButtons />
+      <NavButtons search={search} onSetSearch={onSetSearch} />
     </header>
-  );
-}
-
-function Logo() {
-  return (
-    <div className="logo">
-      <img src="src/assets/logo.png" alt="Compass Logo" />
-      <h1>Compass</h1>
-    </div>
-  );
-}
-
-function NavLinks() {
-  return (
-    <nav className="nav-pages">
-      <a href="#">Home</a>
-      <a href="#">Shop</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-  );
-}
-
-function NavButtons() {
-  return (
-    <div className="icons">
-      <BsPersonExclamation />
-      <Search />
-      <BsHeart />
-      <BsCart />
-    </div>
   );
 }

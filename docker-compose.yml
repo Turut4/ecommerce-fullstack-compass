@@ -6,15 +6,15 @@ services:
     ports:
       - '5432:5432'
 
-  ecommerce-backend:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
-    env_file:
-      - backend/.env
-    environment:
-      - NODE_ENV=production
-    depends_on:
-      - postgres
-    ports:
-      - '3000:3000'
+  # ecommerce-backend:
+  #   build:
+  #     context: .
+  #     dockerfile: backend/Dockerfile
+  #   env_file:
+  #     - backend/.env
+  #   environment:
+  #     - NODE_ENV=production
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - '3000:3000'

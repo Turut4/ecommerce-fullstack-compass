@@ -48,7 +48,7 @@ export class Product {
   @Column()
   image: string;
 
-  @ManyToOne(() => Category, (category) => category.products, { eager: true })
+  @ManyToOne(() => Category, (category) => category.products, {eager: true})
   category: Category;
 
   @OneToOne(() => User)

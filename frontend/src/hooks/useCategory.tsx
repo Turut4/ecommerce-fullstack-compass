@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { Product } from './useProduct';
 
 export interface Category {
   id: number;
   name: string;
+  products: Product[];
 }
 
 async function fetchCategories(): Promise<Category[]> {

@@ -2,15 +2,27 @@ import './ProductsList.css';
 import { Product } from './Product';
 import { useProducts } from '../../../hooks/useProduct';
 import useCategories from '../../../hooks/useCategory';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import WarningSession from '../FilterSession/WarningSession';
 import FilterSession from '../FilterSession/FilterSession';
 
-export default function ProductsList() {
+interface ProductsListProps {
+  search: string;
+}
+
+export default function ProductsList({ search }: ProductsListProps) {
   const [selectedCategory, setCategory] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+
+  if (sortBy === 'Default') {
+    setSortBy('');
+  }
+
+  if (selectedCategory === 'All') {
+    setCategory('');
+  }
 
   useEffect(() => {
     setPage(1);
@@ -36,6 +48,7 @@ export default function ProductsList() {
     {
       category: selectedCategory,
       sort: sortBy.toLowerCase(),
+      search,
     },
   );
 
