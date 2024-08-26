@@ -1,6 +1,6 @@
 import { BsFilter } from 'react-icons/bs';
 import { Category } from '../../../../../hooks/useCategory';
-import SetCategory from './CategoriesFilter';
+import SetCategory from './SetCategory';
 
 interface FilterByCategoryProps {
   isOpen: boolean;

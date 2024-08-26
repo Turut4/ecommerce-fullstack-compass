@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Category } from './category.entity';
 import { User } from './user.entity';
+import { Transform } from 'class-transformer';
 
 export enum Size {
   SMALL = 'small',
@@ -48,10 +49,10 @@ export class Product {
   @Column()
   image: string;
 
-  @ManyToOne(() => Category, (category) => category.products, {eager: true})
+  @ManyToOne(() => Category, (category) => category.products, { eager: true })
   category: Category;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   createdBy: User;
 

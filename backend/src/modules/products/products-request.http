@@ -10,7 +10,9 @@ Content-Type: application/json
   "description": "good desk for your bedroom",
   "color": "yellow",
   "size": "large",
-  "image": "grinder.png"
+  "image": "grinder.png",
+  "category": "db2f5e58-51b1-4289-9bf1-70de7537edde"
+
 }
 
 ###Find all products || product by name

@@ -1,11 +1,8 @@
 import {
   Entity,
-  PrimaryColumn,
   Column,
   OneToMany,
   PrimaryGeneratedColumn,
-  ManyToMany,
-  ManyToOne,
   OneToOne,
   JoinColumn,
 } from 'typeorm';

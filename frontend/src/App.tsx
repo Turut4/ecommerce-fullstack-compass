@@ -1,6 +1,6 @@
-import ShopPage from './components/ShopPage/ShopPage';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ShopPage from './components/ShopPage/ShopPage';
 
 export default function App() {
   return (

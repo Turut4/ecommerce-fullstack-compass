@@ -32,6 +32,15 @@
   font-weight: 600;
 }
 
+.product {
+  position: relative;
+  display: flex;
+}
+
+.product h3 {
+  text-transform: capitalize;
+}
+
 @media (max-width: 1400px) {
   .products-list {
     grid-template-columns: var(--three--cards);

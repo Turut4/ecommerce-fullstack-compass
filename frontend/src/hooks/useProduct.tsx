@@ -23,7 +23,7 @@ export interface Product {
   createdAt: string;
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   products: Product[];
   total: number;
   page: number;
