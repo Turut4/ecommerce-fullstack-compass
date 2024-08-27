@@ -11,6 +11,8 @@ import {
   normalizeSortBy,
   validatePriceRange,
 } from './validateFilters';
+import Footer from '../Footer/Footer';
+import BenefitsBanner from '../BenefitsBanner/BennefitsBanner';
 
 export type Filters = {
   sortBy: string;
@@ -18,6 +20,7 @@ export type Filters = {
   pageSize: number;
   priceMin: number;
   priceMax: number;
+  search: string;
 };
 
 export type Setters = {
@@ -26,6 +29,7 @@ export type Setters = {
   setPageSize: (value: number) => void;
   setPriceMin: (value: number) => void;
   setPriceMax: (value: number) => void;
+  setSearch: (value: string) => void;
 };
 
 export default function ShopPage() {
@@ -72,6 +76,7 @@ export default function ShopPage() {
     pageSize,
     priceMin,
     priceMax,
+    search,
   };
 
   const setters: Setters = {
@@ -80,12 +85,13 @@ export default function ShopPage() {
     setPriceMin,
     setPageSize,
     setPriceMax,
+    setSearch,
   };
 
   return (
     <div>
-      <Header search={search} onSetSearch={setSearch} />
-      <Banner />
+      <Header />
+      <Banner path="Shop" />
       <FilterSession
         filters={filters}
         categories={categoriesData}
@@ -99,6 +105,8 @@ export default function ShopPage() {
         productData={productsData}
         isLoadingProducts={isLoadingProducts}
       />
+      <BenefitsBanner />
+      <Footer />
     </div>
   );
 }

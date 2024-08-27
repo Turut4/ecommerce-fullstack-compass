@@ -52,7 +52,6 @@ header h1 {
 
 .search-bar {
   display: flex;
-  position: absolute;
   right: 4rem;
   top: 5rem;
   background-color: #fff;
@@ -71,7 +70,7 @@ header h1 {
 .search-bar input {
   border: none;
   font-size: 1rem;
-  width: 16rem;
+  width: 12rem;
 }
 
 .search-bar input[type='submit'] {

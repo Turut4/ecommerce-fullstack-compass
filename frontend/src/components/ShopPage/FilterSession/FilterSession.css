@@ -74,9 +74,9 @@
 }
 
 .show input {
-  height: 3rem;
-  aspect-ratio: 1;
   border: none;
+  aspect-ratio: 1;
+  width: 48px;
   margin: 1.8rem;
   justify-content: center;
   text-align: center;
@@ -91,17 +91,28 @@ input[type='number'] {
 .category-filter {
   border: solid #9f9f9f 1px;
   z-index: 1;
-
   margin-top: 1rem;
   position: absolute;
   display: flex;
   background-color: #f9f1e7;
   padding: 10px;
   align-items: center;
+  width: 20rem;
   gap: 10px;
+  font-size: 1rem;
+  flex-direction: column;
 }
 
-.category-filter > input {
-  height: 1.5rem;
-  aspect-ratio: 2/1;
+.min-max {
+  display: flex;
+  flex-direction: row;
+}
+
+.min-max > input {
+  width: 50px;
+  border: none;
+  margin: 0 20px;
+  text-align: center;
+  background-color: #f9f1e7;
+  border-bottom: 1px solid #000;
 }

@@ -54,7 +54,7 @@ import rateLimit from 'express-rate-limit';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     const corsOptions = {
-      origin: 'http://localhost:5173',
+      origin: 'http://127.0.0.1:5173',
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       allowedHeaders: 'Content-Type, Authorization',
       Credential: true,

@@ -1,0 +1,88 @@
+footer {
+  background-color: #fff;
+  padding: 20px 0;
+  font-family: Poppins;
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1440px;
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  padding: 20px;
+  border-bottom: 1px solid #d9d9d9;
+  height: 405px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.footer-section h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #9f9f9f;
+}
+
+.footer-links {
+  list-style-type: none;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.footer-links li {
+  margin-top: 50px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.address {
+  padding-right: 40px;
+}
+
+.address address {
+  color: #9f9f9f;
+  margin-top: 50px;
+}
+
+.newsletter-form {
+  margin-top: 50px;
+}
+
+.newsletter-form input[type='email'] {
+  width: 200px;
+  border: none;
+  border-bottom: 1px solid #000;
+  margin-right: 10px;
+}
+
+.newsletter-form button {
+  padding: 0 10px;
+  border: none;
+  border-bottom: 1px solid #000;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.footer-bottom {
+  padding: 10px 0;
+  height: 80px;
+  margin-left: 75px;
+  font-size: 14px;
+  color: #777;
+  max-width: 1400px;
+  margin: 0 auto;
+}

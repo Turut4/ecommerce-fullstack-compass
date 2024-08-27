@@ -13,6 +13,8 @@ interface FilterByCategoryProps {
   onSetPriceMax: (priceMax: number) => void;
   priceMin: number;
   priceMax: number;
+  onSetSearch: (search: string) => void;
+  search: string;
 }
 
 export default function FilterByCategory({
@@ -26,6 +28,8 @@ export default function FilterByCategory({
   onSetPriceMax,
   priceMin,
   priceMax,
+  onSetSearch,
+  search,
 }: FilterByCategoryProps) {
   return (
     <div className="filter">
@@ -37,6 +41,8 @@ export default function FilterByCategory({
         Filter
         {isOpen && (
           <SetCategory
+            onSetSearch={onSetSearch}
+            search={search}
             onSetPriceMin={onSetPriceMin}
             onSetPriceMax={onSetPriceMax}
             priceMin={priceMin}

@@ -19,13 +19,15 @@ export default function FilterSession({
   message,
 }: FilterSessionProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { sortBy, selectedCategory, priceMin, priceMax, pageSize } = filters;
-  const { setSortBy, setCategory, setPriceMin, setPriceMax, setPageSize } =
+  const { sortBy, selectedCategory, priceMin, priceMax, pageSize, search } = filters;
+  const { setSortBy, setCategory, setPriceMin, setPriceMax, setPageSize, setSearch } =
     setters;
   return (
     <div className="filter-session">
       <div>
         <FilterByCategory
+          onSetSearch={setSearch}
+          search={search}
           onSetPriceMin={setPriceMin}
           priceMin={priceMin}
           onSetPriceMax={setPriceMax}

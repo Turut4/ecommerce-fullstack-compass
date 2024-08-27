@@ -1,0 +1,31 @@
+.pages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 20px;
+}
+
+.page {
+  aspect-ratio: 1;
+  width: 60px;
+  background-color: #f9f1e7;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.active {
+  background-color: #b88e2f;
+  color: #fff;
+}
+
+.next,
+.previous {
+  aspect-ratio: 2/1;
+  height: 60px;
+  background-color: #f9f1e7;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+}
