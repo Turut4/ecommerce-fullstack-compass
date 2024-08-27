@@ -14,7 +14,8 @@ interface ProductProps extends ComponentProps<'div'> {
   createdAt: string;
 }
 
-function formatCurrency(value: number): string {
+// eslint-disable-next-line react-refresh/only-export-components
+export function formatCurrency(value: number): string {
   return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
@@ -39,7 +40,7 @@ export function Product({
         <div className="product-overlay">
           <button
             onClick={() => {
-              dispatch(addItemToCart({ id, name, price, quantity: 1 }));
+              dispatch(addItemToCart({ id, name, price, quantity: 1, image }));
             }}
           >
             Add to cart
