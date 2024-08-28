@@ -1,11 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from 'src/shared/dtos/order/create-order.dto';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { AdminGuard } from 'src/shared/guards/admin.guard';
 
 @Controller('orders')
-@UseGuards(AuthGuard, AdminGuard)
 export class OrdersController {
   constructor(private readonly orderService: OrdersService) {}
 

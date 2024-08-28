@@ -56,7 +56,7 @@ export class UsersController {
   async signIn(@Body() body: LoginUserDto): Promise<any> {
     const jwt = await this.authService.signin(body.email, body.password);
 
-    return jwt;
+    return jwt ;
   }
 
   @UseGuards(AuthGuard)

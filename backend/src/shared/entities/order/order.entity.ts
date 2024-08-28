@@ -24,6 +24,15 @@ export class Order {
   @Column()
   address: string;
 
+  @Column()
+  name: string;
+
   @ManyToOne(() => User, (user) => user.orders)
   user: User;
+
+  @Column()
+  additional_information: string;
+
+  @Column()
+  company: string;
 }

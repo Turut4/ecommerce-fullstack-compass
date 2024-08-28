@@ -15,6 +15,7 @@ export declare class Product {
     stock: number;
     shortDescription: string;
     description: string;
+    tags: string[];
     color: string;
     size: Size;
     images: string[];

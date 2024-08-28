@@ -1,4 +1,5 @@
 import './Banner.css';
+import { PathIcon } from './PathIcon';
 
 interface BannerProps {
   path: string;
@@ -24,19 +25,5 @@ export default function Banner({ path }: BannerProps) {
         </h3>
       </div>
     </div>
-  );
-}
-
-function PathIcon() {
-  return (
-    <svg
-      width="8"
-      height="14"
-      viewBox="0 0 8 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M0 12L5 7L0 2L1 0L8 7L1 14L0 12Z" fill="black" />
-    </svg>
   );
 }

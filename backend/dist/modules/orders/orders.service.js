@@ -30,7 +30,7 @@ let OrdersService = class OrdersService {
     async createOrderItem(createOrderItem) {
         const orderItems = createOrderItem.map(async (item) => {
             const product = await this.productsService.findOne(item.productId);
-            if (product.stock > item.quantity) {
+            if (product.stock >= item.quantity) {
                 product.stock -= item.quantity;
                 await this.productsService.updateStock(product.id, {
                     stock: product.stock,
@@ -48,13 +48,22 @@ let OrdersService = class OrdersService {
         return Promise.all(orderItems);
     }
     async create(userId, createOrderDto) {
-        const { createOrderItems, address } = createOrderDto;
+        const { createOrderItems, address, name, additional_information, company } = createOrderDto;
         const user = await this.usersService.findOne(userId);
         if (!user)
             throw new common_1.NotFoundException('User not found');
         const orderItems = await this.createOrderItem(createOrderItems);
         const total = orderItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-        const order = this.orderRepo.create({ user, orderItems, address, total });
+        const order = this.orderRepo.create({
+            name,
+            company,
+            additional_information,
+            user,
+            orderItems,
+            address,
+            total,
+        });
+        console.log(order);
         return this.orderRepo.save(order);
     }
     async findAll() {

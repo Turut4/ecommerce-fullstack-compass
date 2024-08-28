@@ -35,9 +35,21 @@ __decorate([
     __metadata("design:type", String)
 ], Order.prototype, "address", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "name", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.orders),
     __metadata("design:type", user_entity_1.User)
 ], Order.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "additional_information", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "company", void 0);
 exports.Order = Order = __decorate([
     (0, typeorm_1.Entity)('orders')
 ], Order);

@@ -10,6 +10,7 @@ export declare class ProductsController {
     createProduct(admin: User, body: CreateProductDto): Promise<import("../../shared/entities/products/product.entity").Product>;
     findAllProducts(page: number, pageSize: number, category?: string, priceMin?: number, priceMax?: number, sort?: 'lower' | 'higher' | 'a-z' | 'z-a', search?: string): Promise<ProductResponse>;
     findProductsByName(name: string): Promise<import("../../shared/entities/products/product.entity").Product[]>;
+    findProductVariant(id: string, color: string, size: string): Promise<import("../../shared/entities/products/product.entity").Product>;
     findOne(id: string): Promise<import("../../shared/entities/products/product.entity").Product>;
     updateProduct(id: string, body: UpdateProductDto): Promise<import("../../shared/entities/products/product.entity").Product>;
     updateProductStock(id: string, body: UpdateStockDto): Promise<import("../../shared/entities/products/product.entity").Product>;

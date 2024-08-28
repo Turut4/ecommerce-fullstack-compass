@@ -45,6 +45,9 @@ export class Product {
   @Column()
   description: string;
 
+  @Column('simple-array')
+  tags: string[];
+
   @Column()
   color: string;
 

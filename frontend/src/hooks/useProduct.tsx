@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { Product } from '../components/ShopPage/Products/Product';
 
 export interface Filters {
   category?: string;
@@ -9,12 +10,17 @@ export interface Filters {
   search?: string;
 }
 
+interface Category {
+  id: string;
+  name: string;
+}
+
 export interface Product {
   id: string;
   name: string;
   price: number;
   rating: number;
-  category: string;
+  category: Category;
   stock: number;
   sku: string;
   description: string;
@@ -24,6 +30,7 @@ export interface Product {
   createdAt: string;
   color: string;
   size: string;
+  tags: string[];
 }
 
 export interface ApiResponse {
@@ -66,6 +73,20 @@ async function fetchProductById(id: string): Promise<Product> {
   return response.json();
 }
 
+async function fetchProductByName(
+  name: string | undefined,
+): Promise<Product[]> {
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_API_URL}/products/name/${name}`,
+  );
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  return response.json();
+}
+
 export function useProducts(
   page: number,
   pageSize: number,
@@ -81,5 +102,12 @@ export function useProduct(id: string) {
   return useQuery<Product>({
     queryKey: ['product', id],
     queryFn: () => fetchProductById(id),
+  });
+}
+
+export function useProductsByName(name: string | undefined) {
+  return useQuery<Product[]>({
+    queryKey: ['productsByName', name],
+    queryFn: () => fetchProductByName(name),
   });
 }

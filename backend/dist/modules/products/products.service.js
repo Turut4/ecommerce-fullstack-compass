@@ -100,6 +100,19 @@ let ProductsService = class ProductsService {
             throw new common_1.NotFoundException('Product not Found...');
         return product;
     }
+    async findOneVariant(id, color, size) {
+        const query = this.repo.createQueryBuilder();
+        query.leftJoinAndSelect('product.category', 'category');
+        query.where('id = :id', { id });
+        if (!query)
+            throw new common_1.NotFoundException('Product not Found...');
+        if (color)
+            query.andWhere('color = :color', { color });
+        if (size)
+            query.andWhere('size = :size', { size });
+        const product = await query.getOne();
+        return product;
+    }
     async update(sku, updateProductDto) {
         const product = await this.findOne(sku);
         Object.assign(product, updateProductDto);

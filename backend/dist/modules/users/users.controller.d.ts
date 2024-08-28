@@ -9,7 +9,17 @@ export declare class UsersController {
     private readonly authService;
     constructor(usersService: UsersService, authService: AuthService);
     createUser(body: CreateUserDto, session: any): Promise<User>;
-    signUp(body: CreateUserDto): Promise<User>;
+    signUp(body: CreateUserDto): Promise<{
+        jwt: string;
+        id: string;
+        email: string;
+        password: string;
+        username: string;
+        created_at: Date;
+        updated_at: Date;
+        orders: import("../../shared/entities/order/order.entity").Order[];
+        is_admin: boolean;
+    }>;
     signIn(body: LoginUserDto): Promise<any>;
     logOut(res: Response): void;
     whoAmI(user: User): Promise<User>;

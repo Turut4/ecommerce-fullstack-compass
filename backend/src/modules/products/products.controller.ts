@@ -53,9 +53,18 @@ export class ProductsController {
     );
   }
 
-  @Get()
-  findProductsByName(@Query('name') name: string) {
+  @Get('name/:name')
+  findProductsByName(@Param('name') name: string) {
     return this.productsService.findManyByName(name);
+  }
+
+  @Get('variant/:id')
+  findProductVariant(
+    @Param('id') id: string,
+    @Query('color') color: string,
+    @Query('size') size: string,
+  ) {
+    return this.productsService.findOneVariant(id, color, size);
   }
 
   @Get('/:id')

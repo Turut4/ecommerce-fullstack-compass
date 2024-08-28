@@ -155,6 +155,23 @@ export class ProductsService {
     return product;
   }
 
+  async findOneVariant(
+    id: string,
+    color: string,
+    size: string,
+  ): Promise<Product> {
+    const query = this.repo.createQueryBuilder();
+    query.leftJoinAndSelect('product.category', 'category');
+    query.where('id = :id', { id });
+    if (!query) throw new NotFoundException('Product not Found...');
+
+    if (color) query.andWhere('color = :color', { color });
+    if (size) query.andWhere('size = :size', { size });
+    const product = await query.getOne();
+
+    return product;
+  }
+
   async update(
     sku: string,
     updateProductDto: UpdateProductDto,

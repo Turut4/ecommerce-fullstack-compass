@@ -25,7 +25,8 @@ export class OrdersService {
   async createOrderItem(createOrderItem: CreateOrderItemDto[]) {
     const orderItems = createOrderItem.map(async (item): Promise<OrderItem> => {
       const product = await this.productsService.findOne(item.productId);
-      if (product.stock > item.quantity) {
+
+      if (product.stock >= item.quantity) {
         product.stock -= item.quantity;
         await this.productsService.updateStock(product.id, {
           stock: product.stock,
@@ -47,7 +48,8 @@ export class OrdersService {
   }
 
   async create(userId: string, createOrderDto: CreateOrderDto) {
-    const { createOrderItems, address } = createOrderDto;
+    const { createOrderItems, address, name, additional_information, company } =
+      createOrderDto;
 
     const user = await this.usersService.findOne(userId);
     if (!user) throw new NotFoundException('User not found');
@@ -58,7 +60,16 @@ export class OrdersService {
       0,
     );
 
-    const order = this.orderRepo.create({ user, orderItems, address, total });
+    const order = this.orderRepo.create({
+      name,
+      company,
+      additional_information,
+      user,
+      orderItems,
+      address,
+      total,
+    });
+    console.log(order);
     return this.orderRepo.save(order);
   }
 

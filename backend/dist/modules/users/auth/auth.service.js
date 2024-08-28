@@ -26,18 +26,21 @@ let AuthService = class AuthService {
         const hashedPassword = await this.passwordService.hashPassword(password);
         if (users.length)
             throw new common_1.BadRequestException('Email already in use');
+        const jwt = this.jwtService.sign({ token: '' });
         const user = await this.userService.create(email, hashedPassword, username);
-        return user;
+        return { ...user, jwt };
     }
     async signin(email, password) {
         const [user] = await this.userService.find(email);
         if (!user)
             throw new common_1.BadRequestException('Invalid credentials');
+        console.log(user);
         const isPasswordValid = await this.passwordService.verifyPassword(password, user.password);
         if (!isPasswordValid)
             throw new common_1.BadRequestException('Password not valid');
         const { password: _, ...payload } = user;
-        return this.jwtService.sign(payload);
+        const jwt = this.jwtService.sign({ access_token: payload });
+        return { ...user, jwt };
     }
     async logout() {
         this.jwtService.sign({ sub: '' }, { expiresIn: '1s' });

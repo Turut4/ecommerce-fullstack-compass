@@ -28,6 +28,7 @@ export declare class ProductsService {
     findAll(filters: ProductFilter, page: number, pageSize: number): Promise<ProductResponse>;
     findManyByName(name: string): Promise<Product[]>;
     findOne(id: string): Promise<Product>;
+    findOneVariant(id: string, color: string, size: string): Promise<Product>;
     update(sku: string, updateProductDto: UpdateProductDto): Promise<Product>;
     updateStock(sku: string, newStock: UpdateStockDto): Promise<Product>;
     delete(sku: string): Promise<Product>;

@@ -57,6 +57,10 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 __decorate([
+    (0, typeorm_1.Column)('simple-array'),
+    __metadata("design:type", Array)
+], Product.prototype, "tags", void 0);
+__decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Product.prototype, "color", void 0);

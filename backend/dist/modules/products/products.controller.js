@@ -41,6 +41,9 @@ let ProductsController = class ProductsController {
     findProductsByName(name) {
         return this.productsService.findManyByName(name);
     }
+    findProductVariant(id, color, size) {
+        return this.productsService.findOneVariant(id, color, size);
+    }
     findOne(id) {
         return this.productsService.findOne(id);
     }
@@ -81,12 +84,21 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "findAllProducts", null);
 __decorate([
-    (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('name')),
+    (0, common_1.Get)('name/:name'),
+    __param(0, (0, common_1.Param)('name')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "findProductsByName", null);
+__decorate([
+    (0, common_1.Get)('variant/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Query)('color')),
+    __param(2, (0, common_1.Query)('size')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", void 0)
+], ProductsController.prototype, "findProductVariant", null);
 __decorate([
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id')),

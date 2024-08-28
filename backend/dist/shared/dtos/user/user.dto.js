@@ -28,6 +28,10 @@ __decorate([
 ], UserDto.prototype, "email", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
+    __metadata("design:type", String)
+], UserDto.prototype, "jwt", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
     __metadata("design:type", Boolean)
 ], UserDto.prototype, "is_admin", void 0);
 //# sourceMappingURL=user.dto.js.map

@@ -42,12 +42,16 @@ header h1 {
   display: flex;
   font-size: 2rem;
   align-items: center;
+  margin-right: 50px;
   width: 8rem;
   gap: 0.5rem;
 }
 
-.icons > a {
+.icons > a,
+.icons > button {
   margin: 1rem;
+  background-color: transparent;
+  border: none;
   align-items: center;
   line-height: 2rem;
   font-size: 2rem;

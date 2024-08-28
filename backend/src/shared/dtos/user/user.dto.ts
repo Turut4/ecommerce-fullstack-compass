@@ -10,6 +10,8 @@ export class UserDto {
   @Expose()
   email: string;
 
+  @Expose()
+  jwt?: string;
 
   @Expose()
   is_admin: boolean;
