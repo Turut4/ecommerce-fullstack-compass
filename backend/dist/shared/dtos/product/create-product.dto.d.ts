@@ -1,12 +1,13 @@
-import { Size } from './../../entities/product.entity';
+import { Size } from '../../entities/products/product.entity';
 export declare class CreateProductDto {
     price: number;
     name: string;
     description: string;
+    shortDescription: string;
     color: string;
     size: Size;
     stock: number;
     categoryId: string;
     percentageDiscount: number;
-    image: string;
+    images: string[];
 }

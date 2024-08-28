@@ -1,4 +1,4 @@
-import { Product } from '../product.entity';
+import { Product } from '../products/product.entity';
 export declare class OrderItem {
     id: string;
     product: Product;

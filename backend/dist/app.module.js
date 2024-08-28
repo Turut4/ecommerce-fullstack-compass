@@ -12,12 +12,10 @@ const typeorm_1 = require("@nestjs/typeorm");
 const users_module_1 = require("./modules/users/users.module");
 const products_module_1 = require("./modules/products/products.module");
 const categories_module_1 = require("./modules/categories/categories.module");
-const carts_module_1 = require("./modules/carts/carts.module");
 const orders_module_1 = require("./modules/orders/orders.module");
 const users_controller_1 = require("./modules/users/users.controller");
 const orders_controller_1 = require("./modules/orders/orders.controller");
 const categories_controller_1 = require("./modules/categories/categories.controller");
-const carts_controller_1 = require("./modules/carts/carts.controller");
 const config_1 = require("@nestjs/config");
 const auth_module_1 = require("./modules/users/auth/auth.module");
 const cors = require("cors");
@@ -60,14 +58,12 @@ exports.AppModule = AppModule = __decorate([
             products_module_1.ProductsModule,
             orders_module_1.OrdersModule,
             categories_module_1.CategoriesModule,
-            carts_module_1.CartsModule,
             auth_module_1.AuthModule,
         ],
         controllers: [
             orders_controller_1.OrdersController,
             users_controller_1.UsersController,
             categories_controller_1.CategoriesController,
-            carts_controller_1.CartsController,
         ],
     })
 ], AppModule);

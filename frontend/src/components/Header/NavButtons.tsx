@@ -4,7 +4,7 @@ export function NavButtons() {
   return (
     <div className="icons">
       <BsPersonExclamation />
-      <BsCart/>
+      <a href="/cart"><BsCart/></a>
     </div>
   );
 }

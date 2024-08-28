@@ -12,6 +12,7 @@
   display: grid;
   grid-template-columns: var(--four--cards);
   gap: 4rem;
+  margin-bottom: 4rem;
 }
 
 .products-list img {
@@ -20,6 +21,7 @@
 }
 
 .products-list h3 {
+  text-wrap: nowrap;
   font-size: 24px;
   font-weight: 600;
 }
@@ -37,6 +39,12 @@
 
 .details {
   padding: 5px 10px;
+}
+
+.details > p{
+  color: #898989;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .details span {
@@ -84,6 +92,10 @@
   font-weight: 600;
   height: 3rem;
   color: #b88e2f;
+}
+
+.details {
+  max-height: 150px;
 }
 
 .product:hover .product-overlay {

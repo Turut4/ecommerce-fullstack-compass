@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserDto = void 0;
 const class_transformer_1 = require("class-transformer");
-const cart_entity_1 = require("../../entities/cart/cart.entity");
 class UserDto {
 }
 exports.UserDto = UserDto;
@@ -27,11 +26,6 @@ __decorate([
     (0, class_transformer_1.Expose)(),
     __metadata("design:type", String)
 ], UserDto.prototype, "email", void 0);
-__decorate([
-    (0, class_transformer_1.Expose)(),
-    (0, class_transformer_1.Transform)(({ obj }) => (obj.cart ? obj.cart.id : null)),
-    __metadata("design:type", cart_entity_1.Cart)
-], UserDto.prototype, "cart", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
     __metadata("design:type", Boolean)

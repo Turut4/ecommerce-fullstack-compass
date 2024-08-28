@@ -41,12 +41,17 @@ header h1 {
 .icons {
   display: flex;
   font-size: 2rem;
-  margin-right: 1rem;
+  align-items: center;
+  width: 8rem;
   gap: 0.5rem;
 }
 
-.icons > svg {
+.icons > a {
   margin: 1rem;
+  align-items: center;
+  line-height: 2rem;
+  font-size: 2rem;
+  aspect-ratio: 1;
   cursor: pointer;
 }
 

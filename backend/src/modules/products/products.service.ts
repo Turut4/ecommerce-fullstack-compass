@@ -8,13 +8,12 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateProductDto } from 'src/shared/dtos/product/create-product.dto';
 import { UpdateProductDto } from 'src/shared/dtos/product/update-product.dto';
-import { Product } from 'src/shared/entities/product.entity';
+import { Product } from 'src/shared/entities/products/product.entity';
 import { In, Repository } from 'typeorm';
 import { SkuService } from './sku/sku.service';
 import { UpdateStockDto } from 'src/shared/dtos/product/update-stock.dto';
 import { CategoriesService } from '../categories/categories.service';
 import { User } from 'src/shared/entities/user.entity';
-import { filter } from 'rxjs';
 
 const { faker } = require('@faker-js/faker');
 
@@ -61,6 +60,11 @@ export class ProductsService {
     createProductDto: CreateProductDto,
   ): Promise<Product> {
     const product = this.repo.create(createProductDto);
+    const existingProducts = await this.findManyByName(product.name);
+
+    if (existingProducts.length > 0) {
+      product.isMaster = false;
+    }
     product.sku = this.skuService.generateSku(product);
     product.createdBy = admin;
 
@@ -86,7 +90,7 @@ export class ProductsService {
   ): Promise<ProductResponse> {
     const query = this.repo.createQueryBuilder('product');
     query.leftJoinAndSelect('product.category', 'category');
-
+    query.andWhere('product.isMaster = :isMaster', { isMaster: true });
     const filterBy = {
       category: filters.category ? 'category.name = :category' : undefined,
       priceMin:
@@ -170,7 +174,7 @@ export class ProductsService {
       throw new Error(`Product with sku ${sku} not found`);
     }
 
-    product.stock += newStock.stock;
+    product.stock = newStock.stock;
 
     return this.repo.save(product);
   }
@@ -191,12 +195,14 @@ export class ProductsService {
       const product = {
         name: faker.commerce.productName(),
         description: faker.commerce.productDescription(),
+        shortDescription: faker.lorem.sentence(),
         price: parseFloat(faker.commerce.price()),
         color: faker.color.rgb(),
         stock: faker.number.int({ min: 0, max: 100 }),
-        image: faker.image.url(),
-        size: faker.helpers.arrayElement(['small', 'medium', 'large']),
+        images: [faker.image.url(), faker.image.url(), faker.image.url()],
+        size: faker.helpers.arrayElement(['S', 'M', 'L', 'XL']),
         percentageDiscount: faker.number.int({ min: 0, max: 40 }),
+        isMaster: true,
         category,
       } as Product;
 

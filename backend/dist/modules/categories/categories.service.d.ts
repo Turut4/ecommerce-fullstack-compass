@@ -6,7 +6,7 @@ export declare class CategoriesService {
     private repo;
     private productsService;
     constructor(repo: Repository<Category>, productsService: ProductsService);
-    resolveProducts(productsId: string[]): Promise<import("../../shared/entities/product.entity").Product[]>;
+    resolveProducts(productsId: string[]): Promise<import("../../shared/entities/products/product.entity").Product[]>;
     create(createCategoryDto: CreateCategoryDto): Promise<Category>;
     findAll(): Promise<Category[]>;
     findOne(id: string): Promise<Category>;

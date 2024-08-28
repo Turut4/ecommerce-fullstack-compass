@@ -7,7 +7,6 @@ import { OrderItem } from 'src/shared/entities/order/order-item.entity';
 import { UsersModule } from '../users/users.module';
 import { ProductsModule } from '../products/products.module';
 import { CategoriesModule } from '../categories/categories.module';
-import { CartsModule } from '../carts/carts.module';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
@@ -18,7 +17,6 @@ import { JwtModule } from '@nestjs/jwt';
     UsersModule,
     ProductsModule,
     CategoriesModule,
-    CartsModule,
     JwtModule,
   ],
   exports: [OrdersService],

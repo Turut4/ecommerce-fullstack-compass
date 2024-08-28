@@ -9,7 +9,6 @@ import { CreateCategoryDto } from 'src/shared/dtos/category/create-category.dto'
 import { Category } from 'src/shared/entities/category.entity';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../products/products.service';
-import { count } from 'console';
 
 const { faker } = require('@faker-js/faker');
 

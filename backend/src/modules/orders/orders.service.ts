@@ -1,11 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderItem } from 'src/shared/entities/order/order-item.entity';
 import { Order } from 'src/shared/entities/order/order.entity';
 import { Repository } from 'typeorm';
-import { CartsService } from '../carts/carts.service';
 import { UsersService } from '../users/users.service';
 import { CreateOrderDto } from 'src/shared/dtos/order/create-order.dto';
+import { ProductsService } from '../products/products.service';
+import { CreateOrderItemDto } from 'src/shared/dtos/order/create-order-item.dto';
 
 @Injectable()
 export class OrdersService {
@@ -13,24 +18,47 @@ export class OrdersService {
     @InjectRepository(Order) private readonly orderRepo: Repository<Order>,
     @InjectRepository(OrderItem)
     private readonly orderItemRepo: Repository<OrderItem>,
-    private readonly cartService: CartsService,
     private readonly usersService: UsersService,
+    private readonly productsService: ProductsService,
   ) {}
 
-  async create(userId: string, createOrderDto: CreateOrderDto) {
-    const cart = await this.cartService.findByUser(userId);
-    const order = this.orderRepo.create({
-      user: await this.usersService.findOne(userId),
-      orderItems: cart.cartItems.map((cartItem) => {
-        const orderItem = this.orderItemRepo.create({
-          product: cartItem.product,
-          quantity: cartItem.quantity,
+  async createOrderItem(createOrderItem: CreateOrderItemDto[]) {
+    const orderItems = createOrderItem.map(async (item): Promise<OrderItem> => {
+      const product = await this.productsService.findOne(item.productId);
+      if (product.stock > item.quantity) {
+        product.stock -= item.quantity;
+        await this.productsService.updateStock(product.id, {
+          stock: product.stock,
         });
-        return orderItem;
-      }),
-      total: cart.total,
-      address: createOrderDto.address,
+      } else {
+        throw new BadRequestException(
+          product.stock > 0
+            ? `We have only ${product.stock} of ${product.name}`
+            : `Product ${product.name} is out of stock`,
+        );
+      }
+
+      if (!product) throw new NotFoundException('Product not found');
+
+      return this.orderItemRepo.create({ product, quantity: item.quantity });
     });
+
+    return Promise.all(orderItems);
+  }
+
+  async create(userId: string, createOrderDto: CreateOrderDto) {
+    const { createOrderItems, address } = createOrderDto;
+
+    const user = await this.usersService.findOne(userId);
+    if (!user) throw new NotFoundException('User not found');
+
+    const orderItems = await this.createOrderItem(createOrderItems);
+    const total = orderItems.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0,
+    );
+
+    const order = this.orderRepo.create({ user, orderItems, address, total });
     return this.orderRepo.save(order);
   }
 

@@ -18,29 +18,43 @@ const typeorm_1 = require("@nestjs/typeorm");
 const order_item_entity_1 = require("../../shared/entities/order/order-item.entity");
 const order_entity_1 = require("../../shared/entities/order/order.entity");
 const typeorm_2 = require("typeorm");
-const carts_service_1 = require("../carts/carts.service");
 const users_service_1 = require("../users/users.service");
+const products_service_1 = require("../products/products.service");
 let OrdersService = class OrdersService {
-    constructor(orderRepo, orderItemRepo, cartService, usersService) {
+    constructor(orderRepo, orderItemRepo, usersService, productsService) {
         this.orderRepo = orderRepo;
         this.orderItemRepo = orderItemRepo;
-        this.cartService = cartService;
         this.usersService = usersService;
+        this.productsService = productsService;
+    }
+    async createOrderItem(createOrderItem) {
+        const orderItems = createOrderItem.map(async (item) => {
+            const product = await this.productsService.findOne(item.productId);
+            if (product.stock > item.quantity) {
+                product.stock -= item.quantity;
+                await this.productsService.updateStock(product.id, {
+                    stock: product.stock,
+                });
+            }
+            else {
+                throw new common_1.BadRequestException(product.stock > 0
+                    ? `We have only ${product.stock} of ${product.name}`
+                    : `Product ${product.name} is out of stock`);
+            }
+            if (!product)
+                throw new common_1.NotFoundException('Product not found');
+            return this.orderItemRepo.create({ product, quantity: item.quantity });
+        });
+        return Promise.all(orderItems);
     }
     async create(userId, createOrderDto) {
-        const cart = await this.cartService.findByUser(userId);
-        const order = this.orderRepo.create({
-            user: await this.usersService.findOne(userId),
-            orderItems: cart.cartItems.map((cartItem) => {
-                const orderItem = this.orderItemRepo.create({
-                    product: cartItem.product,
-                    quantity: cartItem.quantity,
-                });
-                return orderItem;
-            }),
-            total: cart.total,
-            address: createOrderDto.address,
-        });
+        const { createOrderItems, address } = createOrderDto;
+        const user = await this.usersService.findOne(userId);
+        if (!user)
+            throw new common_1.NotFoundException('User not found');
+        const orderItems = await this.createOrderItem(createOrderItems);
+        const total = orderItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+        const order = this.orderRepo.create({ user, orderItems, address, total });
         return this.orderRepo.save(order);
     }
     async findAll() {
@@ -69,7 +83,7 @@ exports.OrdersService = OrdersService = __decorate([
     __param(1, (0, typeorm_1.InjectRepository)(order_item_entity_1.OrderItem)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
-        carts_service_1.CartsService,
-        users_service_1.UsersService])
+        users_service_1.UsersService,
+        products_service_1.ProductsService])
 ], OrdersService);
 //# sourceMappingURL=orders.service.js.map

@@ -8,7 +8,9 @@ export interface Category {
 }
 
 async function fetchCategories(): Promise<Category[]> {
-  const response = await fetch('http://localhost:3000/categories');
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_API_URL}/categories`,
+  );
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }

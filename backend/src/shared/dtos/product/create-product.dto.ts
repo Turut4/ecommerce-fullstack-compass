@@ -7,9 +7,10 @@ import {
   Max,
   MinLength,
   IsEmpty,
+  IsArray,
 } from 'class-validator';
 
-import { Size } from './../../entities/product.entity';
+import { Size } from '../../entities/products/product.entity';
 
 export class CreateProductDto {
   @IsNumber()
@@ -23,8 +24,11 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(16)
   description: string;
+
+  @IsNotEmpty()
+  @IsString()
+  shortDescription: string;
 
   @IsString()
   @IsNotEmpty()
@@ -48,6 +52,7 @@ export class CreateProductDto {
   percentageDiscount: number;
 
   @IsNotEmpty()
-  @IsString()
-  image: string;
+  @IsArray()
+  images: string[];
+
 }

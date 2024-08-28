@@ -114,12 +114,6 @@ export class UsersController {
     return this.usersService.createRandomUsers(parseInt(count));
   }
 
-  @Patch('/gencarts')
-  @UseGuards(AuthGuard, AdminGuard)
-  async populateCarts() {
-    return this.usersService.populateCarts();
-  }
-
   @Patch('turnadmin/:id')
   @UseGuards(AuthGuard, AdminGuard)
   async turnAdmin(@Param('id') id: string) {

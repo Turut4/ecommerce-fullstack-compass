@@ -1,9 +1,9 @@
 import './BeneftsBanner.css';
-import HighQuality from './svgs/high-quality.svg';
-import Warranty from './svgs/warranty.svg';
-import FreeShipping from './svgs/free-shipping.svg';
-import Support from './svgs/support.svg';
-export default function BennefitsBanner() {
+import HighQuality from '../../assets/icons/high-quality.svg';
+import Warranty from '../../assets/icons/warranty.svg';
+import FreeShipping from '../../assets/icons/free-shipping.svg';
+import Support from '../../assets/icons/support.svg';
+export default function BenefitsBanner() {
   return (
     <div className="benefits">
       <div className="benefits-content">

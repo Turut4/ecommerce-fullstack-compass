@@ -20,6 +20,5 @@ export declare class UsersController {
     deleteMe(user: User): Promise<User>;
     deleteUser(id: string): Promise<User>;
     seedUsers(count: string): Promise<User[]>;
-    populateCarts(): Promise<void>;
     turnAdmin(id: string): Promise<User>;
 }

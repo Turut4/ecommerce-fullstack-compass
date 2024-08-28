@@ -99,6 +99,7 @@ export default function ShopPage() {
         setters={setters}
       />
       <ProductsList
+        pagination={true}
         page={page}
         onSetPage={setPage}
         pageSize={pageSize}

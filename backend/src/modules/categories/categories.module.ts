@@ -3,7 +3,7 @@ import { CategoriesService } from './categories.service';
 import { CategoriesController } from './categories.controller';
 import { Category } from 'src/shared/entities/category.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from 'src/shared/entities/product.entity';
+import { Product } from 'src/shared/entities/products/product.entity';
 import { ProductsModule } from '../products/products.module';
 import { JwtModule } from '@nestjs/jwt';
 

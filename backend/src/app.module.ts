@@ -3,12 +3,10 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { CategoriesModule } from './modules/categories/categories.module';
-import { CartsModule } from './modules/carts/carts.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { UsersController } from './modules/users/users.controller';
 import { OrdersController } from './modules/orders/orders.controller';
 import { CategoriesController } from './modules/categories/categories.controller';
-import { CartsController } from './modules/carts/carts.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './modules/users/auth/auth.module';
 import * as cors from 'cors';
@@ -41,14 +39,12 @@ import rateLimit from 'express-rate-limit';
     ProductsModule,
     OrdersModule,
     CategoriesModule,
-    CartsModule,
     AuthModule,
   ],
   controllers: [
     OrdersController,
     UsersController,
     CategoriesController,
-    CartsController,
   ],
 })
 export class AppModule implements NestModule {

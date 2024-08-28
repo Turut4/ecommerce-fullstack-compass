@@ -18,6 +18,7 @@ import { User } from 'src/shared/entities/user.entity';
 import { AdminGuard } from 'src/shared/guards/admin.guard';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { ProductResponse } from './products.service';
+import { CreateMasterProductDto } from 'src/shared/dtos/product/create-master-product.dto';
 
 @Controller('products')
 export class ProductsController {

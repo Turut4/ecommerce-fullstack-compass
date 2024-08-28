@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SkuService = void 0;
 const common_1 = require("@nestjs/common");
-const product_entity_1 = require("../../../shared/entities/product.entity");
+const product_entity_1 = require("../../../shared/entities/products/product.entity");
 let SkuService = class SkuService {
     generateSku(product) {
         const nameCode = product.name.slice(0, 4).toUpperCase();

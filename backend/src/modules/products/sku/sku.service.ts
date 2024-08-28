@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Product, Size } from 'src/shared/entities/product.entity';
+import { Product, Size } from 'src/shared/entities/products/product.entity';
 
 @Injectable()
 export class SkuService {

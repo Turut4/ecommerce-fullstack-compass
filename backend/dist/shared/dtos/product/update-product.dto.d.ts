@@ -1,4 +1,4 @@
-import { Size } from 'src/shared/entities/product.entity';
+import { Size } from 'src/shared/entities/products/product.entity';
 export declare class UpdateProductDto {
     name?: string;
     price?: number;

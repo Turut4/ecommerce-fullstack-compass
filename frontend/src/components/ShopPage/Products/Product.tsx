@@ -1,8 +1,9 @@
 import { ComponentProps } from 'react';
 import { Tag } from './Tag/Tag';
-import { BsHeart, BsShare, BsArrowLeftRight } from 'react-icons/bs';
+import { BsHeart, BsShare, BsTicketDetailed } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import { addItemToCart } from '../../../store/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductProps extends ComponentProps<'div'> {
   id: string;
@@ -33,6 +34,12 @@ export function Product({
   const isNew =
     Date.now() - new Date(createdAt).getTime() < 1000 * 60 * 60 * 30;
   const isDiscount = discount > 0;
+  const navigate = useNavigate();
+
+  function handleClick(id: string) {
+    navigate(`/shop/${id}`);
+    window.scrollTo(0, 0);
+  }
 
   return (
     <div className="product" style={{ width: '301px' }}>
@@ -49,8 +56,8 @@ export function Product({
             <span>
               <BsShare /> Share
             </span>
-            <span>
-              <BsArrowLeftRight /> Compare
+            <span style={{ cursor: 'pointer' }} onClick={() => handleClick(id)}>
+              <BsTicketDetailed /> Details
             </span>
             <span>
               <BsHeart /> Like

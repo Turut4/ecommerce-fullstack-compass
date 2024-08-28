@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const product_entity_1 = require("../../shared/entities/product.entity");
+const product_entity_1 = require("../../shared/entities/products/product.entity");
 const typeorm_2 = require("typeorm");
 const sku_service_1 = require("./sku/sku.service");
 const categories_service_1 = require("../categories/categories.service");
@@ -28,6 +28,10 @@ let ProductsService = class ProductsService {
     }
     async create(admin, createProductDto) {
         const product = this.repo.create(createProductDto);
+        const existingProducts = await this.findManyByName(product.name);
+        if (existingProducts.length > 0) {
+            product.isMaster = false;
+        }
         product.sku = this.skuService.generateSku(product);
         product.createdBy = admin;
         const productExists = await this.repo.findOne({
@@ -42,6 +46,7 @@ let ProductsService = class ProductsService {
     async findAll(filters, page, pageSize) {
         const query = this.repo.createQueryBuilder('product');
         query.leftJoinAndSelect('product.category', 'category');
+        query.andWhere('product.isMaster = :isMaster', { isMaster: true });
         const filterBy = {
             category: filters.category ? 'category.name = :category' : undefined,
             priceMin: filters.priceMin !== undefined
@@ -106,7 +111,7 @@ let ProductsService = class ProductsService {
         if (!product) {
             throw new Error(`Product with sku ${sku} not found`);
         }
-        product.stock += newStock.stock;
+        product.stock = newStock.stock;
         return this.repo.save(product);
     }
     async delete(sku) {
@@ -122,12 +127,14 @@ let ProductsService = class ProductsService {
             const product = {
                 name: faker.commerce.productName(),
                 description: faker.commerce.productDescription(),
+                shortDescription: faker.lorem.sentence(),
                 price: parseFloat(faker.commerce.price()),
                 color: faker.color.rgb(),
                 stock: faker.number.int({ min: 0, max: 100 }),
-                image: faker.image.url(),
-                size: faker.helpers.arrayElement(['small', 'medium', 'large']),
+                images: [faker.image.url(), faker.image.url(), faker.image.url()],
+                size: faker.helpers.arrayElement(['S', 'M', 'L', 'XL']),
                 percentageDiscount: faker.number.int({ min: 0, max: 40 }),
+                isMaster: true,
                 category,
             };
             product.sku = this.skuService.generateSku(product);

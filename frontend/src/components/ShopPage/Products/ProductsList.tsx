@@ -6,10 +6,11 @@ import Pagination from './Pagination/Pagination';
 
 interface ProductsListProps {
   productData: ApiResponse | undefined;
-  isLoadingProducts: boolean;
+  isLoadingProducts?: boolean;
   page: number;
   onSetPage: (page: number) => void;
   pageSize: number;
+  pagination: boolean;
 }
 
 export default function ProductsList({
@@ -18,6 +19,7 @@ export default function ProductsList({
   page,
   onSetPage,
   pageSize,
+  pagination,
 }: ProductsListProps) {
   if (isLoadingProducts) {
     return (
@@ -31,9 +33,12 @@ export default function ProductsList({
     );
   }
 
+  
+
   if (!productData) {
     return <p>No products available</p>;
   }
+
   const totalPages = Math.ceil(productData?.total / pageSize);
 
   return (
@@ -47,20 +52,22 @@ export default function ProductsList({
               key={p.name}
               id={p.id}
               name={p.name}
-              description={p.description}
+              description={p.shortDescription}
               price={p.price}
               discount={p.percentageDiscount}
-              image={p.image}
+              image={p.images[0]}
               createdAt={p.createdAt}
             />
           ))
         )}
       </div>
-      <Pagination
-        onSetPage={onSetPage}
-        totalPages={totalPages}
-        currentPage={page}
-      />
+      {pagination && (
+        <Pagination
+          onSetPage={onSetPage}
+          totalPages={totalPages}
+          currentPage={page}
+        />
+      )}
     </div>
   );
 }

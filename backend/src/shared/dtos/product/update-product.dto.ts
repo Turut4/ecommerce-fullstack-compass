@@ -6,7 +6,7 @@ import {
   Max,
   MinLength,
 } from 'class-validator';
-import { Size } from 'src/shared/entities/product.entity';
+import { Size } from 'src/shared/entities/products/product.entity';
 
 export class UpdateProductDto {
   @IsOptional()

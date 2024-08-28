@@ -1,6 +1,6 @@
 import { CreateProductDto } from 'src/shared/dtos/product/create-product.dto';
 import { UpdateProductDto } from 'src/shared/dtos/product/update-product.dto';
-import { Product } from 'src/shared/entities/product.entity';
+import { Product } from 'src/shared/entities/products/product.entity';
 import { Repository } from 'typeorm';
 import { SkuService } from './sku/sku.service';
 import { UpdateStockDto } from 'src/shared/dtos/product/update-stock.dto';

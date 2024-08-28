@@ -18,17 +18,18 @@ const user_entity_1 = require("../../shared/entities/user.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const password_service_1 = require("./auth/password/password.service");
-const carts_service_1 = require("../carts/carts.service");
 const { faker } = require('@faker-js/faker');
 let UsersService = class UsersService {
-    constructor(repo, passwordService, cartService) {
+    constructor(repo, passwordService) {
         this.repo = repo;
         this.passwordService = passwordService;
-        this.cartService = cartService;
     }
     async create(email, password, username) {
-        const cart = await this.cartService.create();
-        const user = this.repo.create({ email, password, username, cart });
+        const existingUsers = await this.repo.find();
+        const user = this.repo.create({ email, password, username });
+        if (existingUsers.length <= 0) {
+            user.is_admin = true;
+        }
         return this.repo.save(user);
     }
     async find(email) {
@@ -36,12 +37,7 @@ let UsersService = class UsersService {
         return users;
     }
     async findOne(id) {
-        const user = await this.repo.findOne({
-            where: { id },
-            relations: ['cart'],
-        });
-        if (!id)
-            return null;
+        const user = await this.repo.findOneBy({ id });
         return user;
     }
     async update(id, updateUserDto) {
@@ -75,21 +71,9 @@ let UsersService = class UsersService {
             }
             const users = await Promise.all(Array.from({ length: count }, async () => {
                 const user = createRandomUser();
-                user.cart = await this.cartService.create();
                 return user;
             }));
             return await this.repo.save(users);
-        }
-    }
-    async populateCarts() {
-        if (process.env.NODE_ENV === 'development') {
-            const users = await this.repo.find();
-            users.map(async (user) => {
-                user.cart === null
-                    ? (user.cart = await this.cartService.create())
-                    : (user.cart = user.cart);
-                await this.repo.save(user);
-            });
         }
     }
     async turnAdmin(id) {
@@ -103,7 +87,6 @@ exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        password_service_1.PasswordService,
-        carts_service_1.CartsService])
+        password_service_1.PasswordService])
 ], UsersService);
 //# sourceMappingURL=users.service.js.map

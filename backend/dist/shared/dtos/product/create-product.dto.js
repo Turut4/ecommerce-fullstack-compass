@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProductDto = void 0;
 const class_validator_1 = require("class-validator");
-const product_entity_1 = require("./../../entities/product.entity");
+const product_entity_1 = require("../../entities/products/product.entity");
 class CreateProductDto {
 }
 exports.CreateProductDto = CreateProductDto;
@@ -29,9 +29,13 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MinLength)(16),
     __metadata("design:type", String)
 ], CreateProductDto.prototype, "description", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateProductDto.prototype, "shortDescription", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
@@ -60,7 +64,7 @@ __decorate([
 ], CreateProductDto.prototype, "percentageDiscount", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateProductDto.prototype, "image", void 0);
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], CreateProductDto.prototype, "images", void 0);
 //# sourceMappingURL=create-product.dto.js.map

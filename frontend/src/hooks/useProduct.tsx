@@ -18,9 +18,12 @@ export interface Product {
   stock: number;
   sku: string;
   description: string;
-  image: string;
+  shortDescription: string;
+  images: string[];
   percentageDiscount: number;
   createdAt: string;
+  color: string;
+  size: string;
 }
 
 export interface ApiResponse {
@@ -39,12 +42,27 @@ async function fetchProducts(
     filters as Record<string, string>,
   ).toString();
   const response = await fetch(
-    `http://localhost:3000/products?page=${page}&pageSize=${pageSize}&${query}`,
+    `${
+      import.meta.env.VITE_REACT_API_URL
+    }/products?page=${page}&pageSize=${pageSize}&${query}`,
   );
+  console.log(import.meta.env);
 
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
+
+  return response.json();
+}
+
+async function fetchProductById(id: string): Promise<Product> {
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_API_URL}/products/${id}`,
+  );
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
   return response.json();
 }
 
@@ -56,5 +74,12 @@ export function useProducts(
   return useQuery<ApiResponse>({
     queryKey: ['products', filters, page, pageSize],
     queryFn: () => fetchProducts(page, pageSize, filters),
+  });
+}
+
+export function useProduct(id: string) {
+  return useQuery<Product>({
+    queryKey: ['product', id],
+    queryFn: () => fetchProductById(id),
   });
 }

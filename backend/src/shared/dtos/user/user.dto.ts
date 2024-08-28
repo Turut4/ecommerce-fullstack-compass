@@ -1,5 +1,4 @@
 import { Expose, Transform } from 'class-transformer';
-import { Cart } from 'src/shared/entities/cart/cart.entity';
 
 export class UserDto {
   @Expose()
@@ -11,9 +10,6 @@ export class UserDto {
   @Expose()
   email: string;
 
-  @Expose()
-  @Transform(({ obj }) => (obj.cart ? obj.cart.id : null))
-  cart: Cart;
 
   @Expose()
   is_admin: boolean;

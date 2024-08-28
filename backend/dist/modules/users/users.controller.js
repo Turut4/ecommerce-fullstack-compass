@@ -70,9 +70,6 @@ let UsersController = class UsersController {
     async seedUsers(count) {
         return this.usersService.createRandomUsers(parseInt(count));
     }
-    async populateCarts() {
-        return this.usersService.populateCarts();
-    }
     async turnAdmin(id) {
         return this.usersService.turnAdmin(id);
     }
@@ -171,13 +168,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "seedUsers", null);
-__decorate([
-    (0, common_1.Patch)('/gencarts'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "populateCarts", null);
 __decorate([
     (0, common_1.Patch)('turnadmin/:id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard, admin_guard_1.AdminGuard),
