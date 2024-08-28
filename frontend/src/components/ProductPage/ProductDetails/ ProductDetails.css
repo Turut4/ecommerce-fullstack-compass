@@ -1,0 +1,36 @@
+.product-details-page {
+  display: flex;
+  margin-top: 40px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.product-details {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.product-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-image-gallery {
+  width: 50%;
+}
+
+.product-info-section {
+  width: 50%;
+}
+
+.related{
+  font-size: 36px;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 50px;
+}

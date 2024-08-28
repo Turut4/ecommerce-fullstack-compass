@@ -1,0 +1,41 @@
+.product-info-section {
+  display: flex;
+  text-align: left;
+}
+
+.product-title {
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 63px;
+  padding-bottom: 10px;
+}
+
+.product-price {
+  color: #9f9f9f;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 36px;
+}
+
+.reviews {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: 20px;
+  align-items: center;
+}
+.reviews-quantity {
+  color: #9f9f9f;
+  font-size: 13px;
+}
+
+.stars {
+  border-right: 1px solid #9f9f9f;
+  padding: 5px;
+  padding-right: 20px;
+}
+
+.description {
+  display: flex;
+  max-width: 500px;
+}

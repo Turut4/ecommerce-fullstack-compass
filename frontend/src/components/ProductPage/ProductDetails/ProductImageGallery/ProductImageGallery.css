@@ -1,0 +1,25 @@
+.gallery {
+  display: flex;
+  flex-direction: row;
+}
+
+.all-images {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.all-images img,
+.all-images button {
+  border: none;
+  border-radius: 10px;
+  height: 80px;
+  width: 80px;
+}
+
+.focus-image{
+  border-radius: 10px;
+  width: 420px;
+  height: 500px;
+  margin-left: 2rem;
+}
